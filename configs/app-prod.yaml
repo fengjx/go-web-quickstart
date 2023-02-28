@@ -1,0 +1,5 @@
+server:
+  access: "/var/log/web/access.log"
+
+prop:
+  k1: "value"

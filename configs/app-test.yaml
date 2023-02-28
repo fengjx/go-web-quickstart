@@ -1,0 +1,16 @@
+server:
+  access: "/var/log/web/access.log"
+
+mysql:
+  default:
+      username: app
+      password: 1234
+
+redis:
+  default:
+
+kafka:
+  default:
+
+prop:
+  k1: "value"

@@ -1,12 +1,11 @@
 #!/bin/bash -e
 
-exec > >(tee -a /var/log/web/app.log|logger -t server -s 2>/dev/console) 2>&1
+echo "[`date`] WORK_DIR: ${WORK_DIR}"
 
 APP_ENV=${APP_ENV:-test}
 
-echo "[`date`] Running entrypoint script in the '${APP_ENV}' environment..."
-
-CONFIG_FILE=./configs/app.yml
+CUSTOM_CONFIG_FILE=./configs/app-${APP_ENV}.yaml
 
 echo "[`date`] Starting server..."
-./server -config ${CONFIG_FILE} >> /var/log/web/app.log 2>&1
+echo "[`date`] Custom config: ${CUSTOM_CONFIG_FILE}"
+./${APP_NAME} ${CUSTOM_CONFIG_FILE}

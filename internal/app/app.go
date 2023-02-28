@@ -13,13 +13,13 @@ var Config *config.Config
 
 func init() {
 	Log = logger.New()
-	configFile := "configs/app.yaml"
+	var configFile string
 	if len(os.Args) > 1 {
 		configFile = os.Args[1]
 	}
 	c, err := config.New(configFile)
 	if err != nil {
-		info := fmt.Sprintf("Server start error - load config[%s] fail", configFile)
+		info := fmt.Sprintf("Load config err - %s, custom config file: %s", err.Error(), configFile)
 		panic(info)
 	}
 	Config = c
@@ -40,4 +40,8 @@ func IsTest() bool {
 
 func IsDev() bool {
 	return Config.Env == "dev"
+}
+
+func GetProp(key string) string {
+	return Config.Kv[key]
 }

@@ -4,19 +4,24 @@ WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
-RUN go build -mod=readonly -v -o web-app ./cmd/main.go
+RUN CGO_ENABLED=0 go build -mod=readonly -v -o web-app ./cmd/main.go
 
 
 FROM alpine:3.17
 RUN apk --no-cache add ca-certificates bash
-RUN mkdir -p /var/log/web
 
-WORKDIR /app
-COPY --from=build /app/web-app .
-COPY --from=build /app/build/entrypoint.sh .
-COPY --from=build /app/configs .
+ENV LOG_DIR=/var/log/web
+RUN mkdir -p ${LOG_DIR}
+
+ENV APP_NAME=web-app
+ENV WORK_DIR=/app
+
+WORKDIR ${WORK_DIR}
+
+COPY --from=build /app/${APP_NAME} .
+COPY --from=build /app/build/*.sh .
+COPY --from=build /app/configs ./configs
 RUN ls -la
 
 EXPOSE 8080
-
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["sh", "-c", "./entrypoint.sh"]

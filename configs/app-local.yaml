@@ -1,0 +1,5 @@
+server:
+  access: "./logs/access.log"
+
+prop:
+  k1: "value"

@@ -10,8 +10,8 @@ server:
 
 mysql:
   default:
-      username: app
-      password: 1234
+    username: app
+    password: 1234
 
 redis:
   default:
@@ -19,5 +19,3 @@ redis:
 kafka:
   default:
 
-prop:
-  k1: "value"

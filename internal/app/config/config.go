@@ -1,9 +1,8 @@
 package config
 
 import (
-	"os"
-
 	"gopkg.in/yaml.v3"
+	"os"
 )
 
 type Config struct {
@@ -12,6 +11,7 @@ type Config struct {
 	Server serverConfig
 	Mysql  mysqlConfig
 	Redis  redisConfig
+	Kv     map[string]string
 }
 
 type serverConfig struct {
@@ -28,13 +28,29 @@ type redisConfig struct {
 }
 
 func New(configFile string) (*Config, error) {
-	bytes, err := os.ReadFile(configFile)
+	c := new(Config)
+	err := load(c, "configs/app.yaml")
 	if err != nil {
 		return nil, err
 	}
-	c := new(Config)
-	if err = yaml.Unmarshal(bytes, &c); err != nil {
+	if configFile == "" {
+		return c, nil
+	}
+	// merge
+	err = load(c, configFile)
+	if err != nil {
 		return nil, err
 	}
-	return c, err
+	return c, nil
+}
+
+func load(c *Config, configFile string) error {
+	bytes, err := os.ReadFile(configFile)
+	if err != nil {
+		return err
+	}
+	if err = yaml.Unmarshal(bytes, &c); err != nil {
+		return err
+	}
+	return err
 }
