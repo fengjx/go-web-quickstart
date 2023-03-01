@@ -4,17 +4,21 @@ export GO111MODULE=on
 BINARY_NAME=web-app
 
 # Build parameters.
-BUILD_PATH=".build"
+BUILD_PATH=.build
+DIST_PATH=.dist
 
 .PHONY: build
-build: fmt-go clean build-go
+build: build-go clean
 
 build-go:
 	mkdir -p ${BUILD_PATH}
+	rm -rf ${DIST_PATH}
 	cp -r Makefile build/*.sh cmd pkg internal configs ${BUILD_PATH}
-	go build -a -o $(BUILD_PATH)/${BINARY_NAME} $(BUILD_PATH)/cmd/main.go
+	CGO_ENABLED=0 go build -mod=readonly -v -o $(DIST_PATH)/${BINARY_NAME} $(BUILD_PATH)/cmd/main.go
+	cp -rf ${BUILD_PATH}/configs $(DIST_PATH)
 
 fmt-go:
+	@echo 'fmt-go'
 	@go fmt ./pkg/... ./internal/... ./cmd/...
 	@gofmt -w -s pkg internal cmd
 	@goimports -w pkg internal cmd
@@ -23,8 +27,8 @@ tidy:
 	go mod tidy
 
 clean:
-	mkdir -p ${BUILD_PATH}
-	rm -rf $(BUILD_PATH)
+	@echo 'clean'
+	@rm -rf $(BUILD_PATH)
 
 .PHONY: help
 help:

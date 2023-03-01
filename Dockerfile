@@ -3,12 +3,17 @@ FROM golang:1.20.1-alpine3.17 AS build
 WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
-COPY . .
+COPY build ./build
+COPY cmd ./cmd
+COPY configs ./configs
+COPY internal ./internal
+COPY pkg ./pkg
+COPY Makefile ./
 RUN CGO_ENABLED=0 go build -mod=readonly -v -o web-app ./cmd/main.go
 
 
 FROM alpine:3.17
-RUN apk --no-cache add ca-certificates bash
+RUN apk --no-cache add ca-certificates bash curl
 
 ENV LOG_DIR=/var/log/web
 RUN mkdir -p ${LOG_DIR}
