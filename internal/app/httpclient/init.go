@@ -1,0 +1,5 @@
+package httpclient
+
+func Init() {
+	
+}

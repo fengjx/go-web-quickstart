@@ -1,4 +1,4 @@
-package config
+package appconfig
 
 import (
 	"gopkg.in/yaml.v3"
@@ -8,9 +8,9 @@ import (
 type Config struct {
 	Name   string
 	Env    string
-	Server serverConfig
-	Mysql  mysqlConfig
-	Redis  redisConfig
+	Server *serverConfig
+	DB     map[string]*dbConfig
+	Redis  map[string]*redisConfig
 	Kv     map[string]string
 }
 
@@ -21,13 +21,17 @@ type serverConfig struct {
 	Template []string
 }
 
-type mysqlConfig struct {
+type dbConfig struct {
+	Type    string
+	Dsn     string
+	maxIdle int
+	maxConn int
 }
 
 type redisConfig struct {
 }
 
-func New(configFile string) (*Config, error) {
+func initConfig(configFile string) (*Config, error) {
 	c := new(Config)
 	err := load(c, "configs/app.yaml")
 	if err != nil {
@@ -53,4 +57,12 @@ func load(c *Config, configFile string) error {
 		return err
 	}
 	return err
+}
+
+func GetEnv() string {
+	return Conf.Env
+}
+
+func GetProp(key string) string {
+	return Conf.Kv[key]
 }
