@@ -1,0 +1,14 @@
+
+### ping
+GET http://{{host}}/health/ping
+
+### 注册用户
+
+POST http://{{host}}/api/register
+Content-Type: application/json
+
+{
+  "username": "fjx",
+  "pwd": "123456"
+}
+

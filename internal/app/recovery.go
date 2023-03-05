@@ -26,7 +26,7 @@ func Recovery() gin.HandlerFunc {
 			if err := recover(); err != nil {
 				stack := stack(3)
 				req, _ := httputil.DumpRequest(c.Request, false)
-				applog.Log.Debugf("server: %s (%s)\n%s", err, string(req), stack)
+				applog.Log.Errorf("server: %s (%s)\n%s", err, string(req), stack)
 				c.AbortWithStatus(http.StatusInternalServerError)
 			}
 		}()

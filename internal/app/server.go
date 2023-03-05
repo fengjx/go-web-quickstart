@@ -41,6 +41,7 @@ func (serv *ginServer) Start(ctx context.Context) {
 	}
 	router := gin.New()
 	if env.IsProd() {
+		gin.SetMode(gin.ReleaseMode)
 		router.Use(gzip.Gzip(
 			gzip.DefaultCompression,
 		))

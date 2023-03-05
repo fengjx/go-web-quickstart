@@ -1,5 +1,17 @@
 server:
   access: "./logs/access.log"
 
+db:
+  default:
+    type: mysql
+    dsn: root:1234@tcp(192.168.1.200:3306)/gogo?charset=utf8mb4,utf8&tls=false&timeout=10s
+    show-sql: true
+    max-idle: 5
+    max-conn: 10
+
+redis:
+  default:
+    addr: 192.168.1.200:6379
+
 prop:
   k1: "value"

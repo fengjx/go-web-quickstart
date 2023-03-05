@@ -8,11 +8,6 @@ server:
     - "html"
   access: "./logs/access.log"
 
-mysql:
-  default:
-    username: app
-    password: 1234
-
 redis:
   default:
 

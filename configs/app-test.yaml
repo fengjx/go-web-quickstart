@@ -1,10 +1,10 @@
 server:
   access: "/var/log/web/access.log"
 
-mysql:
+db:
   default:
-      username: app
-      password: 1234
+    type: mysql
+    dsdsn: root:1234@tcp(192.168.1.200:3306)/gogo?charset=utf8mb4,utf8&tls=false&timeout=10s
 
 redis:
   default:

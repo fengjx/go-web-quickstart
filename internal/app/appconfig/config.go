@@ -8,27 +8,31 @@ import (
 type Config struct {
 	Name   string
 	Env    string
-	Server *serverConfig
-	DB     map[string]*dbConfig
-	Redis  map[string]*redisConfig
+	Server *ServerConfig
+	DB     map[string]*DbConfig
+	Redis  map[string]*RedisConfig
 	Kv     map[string]string
 }
 
-type serverConfig struct {
+type ServerConfig struct {
 	Host     string
 	Port     int
 	Access   string
 	Template []string
 }
 
-type dbConfig struct {
+type DbConfig struct {
 	Type    string
 	Dsn     string
-	maxIdle int
-	maxConn int
+	MaxIdle int  `yaml:"max-idle"`
+	MaxConn int  `yaml:"max-conn"`
+	ShowSQL bool `yaml:"show-sql"`
 }
 
-type redisConfig struct {
+type RedisConfig struct {
+	Addr     string
+	Password string
+	DB       int
 }
 
 func initConfig(configFile string) (*Config, error) {

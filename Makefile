@@ -8,8 +8,10 @@ BUILD_PATH=.build
 DIST_PATH=.dist
 
 .PHONY: build
+### build:				项目打包
 build: build-go clean
 
+### build-go:				构建 golang 包
 build-go:
 	mkdir -p ${BUILD_PATH}
 	rm -rf ${DIST_PATH}
@@ -17,19 +19,26 @@ build-go:
 	CGO_ENABLED=0 go build -mod=readonly -v -o $(DIST_PATH)/${BINARY_NAME} $(BUILD_PATH)/cmd/main.go
 	cp -rf ${BUILD_PATH}/configs $(DIST_PATH)
 
+### fmt-go:				格式化 golang 代码
 fmt-go:
 	@echo 'fmt-go'
 	@go fmt ./pkg/... ./internal/... ./cmd/...
 	@gofmt -w -s pkg internal cmd
 	@goimports -w pkg internal cmd
 
+### tidy:				去掉未使用的项目依赖
 tidy:
 	go mod tidy
 
+### clean:				清理临时文件
 clean:
 	@echo 'clean'
 	@rm -rf $(BUILD_PATH)
 
+
+### help:				Makefile 帮助
 .PHONY: help
 help:
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+	@echo Makefile cmd:
+	@echo
+	@grep -E '^### [-A-Za-z0-9_]+:' Makefile | sed 's/###/   /'
