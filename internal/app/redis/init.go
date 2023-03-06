@@ -9,7 +9,7 @@ import (
 var Ctx = context.Background()
 
 var cliMap = make(map[string]*redis.Client)
-var Default *redis.Client
+var defaultCli *redis.Client
 
 func Init() {
 	for key, c := range appconfig.Conf.Redis {
@@ -21,5 +21,5 @@ func Init() {
 		})
 		cliMap[key] = cli
 	}
-	Default = cliMap["default"]
+	defaultCli = cliMap["default"]
 }

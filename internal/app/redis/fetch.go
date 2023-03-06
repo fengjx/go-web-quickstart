@@ -7,7 +7,7 @@ import (
 
 func SetObj(key string, obj interface{}, expiration time.Duration) error {
 	jsonStr := json.ToJson(obj)
-	return Default.Set(Ctx, key, jsonStr, expiration).Err()
+	return Default().Set(Ctx, key, jsonStr, expiration).Err()
 }
 
 // GetObj
@@ -15,7 +15,7 @@ func SetObj(key string, obj interface{}, expiration time.Duration) error {
 // @return bool 缓存是否有数据
 // @return error 异常
 func GetObj(key string, obj interface{}) (bool, error) {
-	val, err := Default.Get(Ctx, key).Result()
+	val, err := Default().Get(Ctx, key).Result()
 	if err != nil {
 		return false, err
 	}

@@ -1,4 +1,4 @@
-package app
+package middleware
 
 import (
 	"fengjx/go-web-quickstart/internal/app/http/header"

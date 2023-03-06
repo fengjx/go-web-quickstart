@@ -4,6 +4,7 @@ import (
 	"context"
 	"fengjx/go-web-quickstart/internal/app/appconfig"
 	"fengjx/go-web-quickstart/internal/app/applog"
+	"fengjx/go-web-quickstart/internal/app/http/middleware"
 	"fengjx/go-web-quickstart/internal/common/env"
 	"fengjx/go-web-quickstart/internal/endpoint/api"
 	"fmt"
@@ -49,7 +50,7 @@ func (serv *ginServer) Start(ctx context.Context) {
 	}
 
 	// Register common middleware.
-	router.Use(Recovery(), Security())
+	router.Use(middleware.Recovery(), middleware.Security())
 
 	// Find and load templates.
 	for _, path := range serverConfig.Template {
