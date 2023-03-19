@@ -20,6 +20,6 @@ func FromJson(jsonStr string, target interface{}) error {
 	return nil
 }
 
-func GetPathVal(jsonStr string, path interface{}) any {
+func GetPathVal(jsonStr string, path interface{}) jsoniter.Any {
 	return jsoniter.Get([]byte(jsonStr), path)
 }

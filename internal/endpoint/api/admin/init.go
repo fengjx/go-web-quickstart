@@ -1,7 +1,13 @@
 package admin
 
-import "github.com/gin-gonic/gin"
+import (
+	"fengjx/go-web-quickstart/internal/app/http/middleware"
+	"github.com/gin-gonic/gin"
+)
+
+var group *gin.RouterGroup
 
 func Init(router *gin.Engine) {
-	router.Group("/admin")
+	group = router.Group("/admin")
+	group.Use(middleware.Admin())
 }

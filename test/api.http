@@ -2,13 +2,27 @@
 ### ping
 GET http://{{host}}/health/ping
 
-### 注册用户
-
-POST http://{{host}}/api/register
+### register
+POST http://{{host}}/openapi/register
 Content-Type: application/json
 
 {
-  "username": "fjx",
+  "username": "fjx3",
   "pwd": "123456"
 }
+
+### login
+POST http://{{host}}/openapi/login
+Content-Type: application/json
+
+{
+  "username": "fjx3",
+  "pwd": "123456"
+}
+
+> {% client.global.set("auth_token", response.body.data.token); %}
+
+### user profile
+GET http://{{host}}/openapi/user/profile
+X-Token: {{auth_token}}
 

@@ -50,7 +50,10 @@ func (serv *ginServer) Start(ctx context.Context) {
 	}
 
 	// Register common middleware.
-	router.Use(middleware.Recovery(), middleware.Security())
+	router.Use(
+		middleware.Recovery(),
+		middleware.Security(),
+	)
 
 	// Find and load templates.
 	for _, path := range serverConfig.Template {

@@ -9,7 +9,11 @@ var Conf *Config
 
 func init() {
 	var configFile string
-	if len(os.Args) > 1 {
+	envConfigPath := os.Getenv("APP_CONFIG_PATH")
+	if envConfigPath != "" {
+		configFile = envConfigPath
+	}
+	if configFile == "" && len(os.Args) > 1 {
 		configFile = os.Args[1]
 	}
 	c, err := initConfig(configFile)
@@ -18,4 +22,8 @@ func init() {
 		panic(info)
 	}
 	Conf = c
+}
+
+func Get() *Config {
+	return Conf
 }

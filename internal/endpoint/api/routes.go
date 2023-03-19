@@ -1,8 +1,8 @@
 package api
 
 import (
-	"fengjx/go-web-quickstart/internal/endpoint/api/front"
 	"fengjx/go-web-quickstart/internal/endpoint/api/health"
+	"fengjx/go-web-quickstart/internal/endpoint/api/open"
 
 	"github.com/gin-gonic/gin"
 )
@@ -10,5 +10,5 @@ import (
 func RegisterRoutes(router *gin.Engine) {
 	router.RedirectTrailingSlash = true
 	health.Init(router)
-	front.Init(router)
+	open.Init(router)
 }

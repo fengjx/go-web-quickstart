@@ -2,23 +2,27 @@ package appconfig
 
 import (
 	"gopkg.in/yaml.v3"
+	"log"
 	"os"
+	"path/filepath"
 )
 
 type Config struct {
-	Name   string
-	Env    string
-	Server *ServerConfig
-	DB     map[string]*DbConfig
-	Redis  map[string]*RedisConfig
-	Kv     map[string]string
+	Name     string
+	Env      string
+	BasePath string
+	Server   *ServerConfig
+	DB       map[string]*DbConfig
+	Redis    map[string]*RedisConfig
+	Kv       map[string]string
 }
 
 type ServerConfig struct {
-	Host     string
-	Port     int
-	Access   string
-	Template []string
+	Host       string
+	Port       int
+	Access     string
+	Template   []string
+	AuthSecret string `yaml:"auth-secret"`
 }
 
 type DbConfig struct {
@@ -37,7 +41,12 @@ type RedisConfig struct {
 
 func initConfig(configFile string) (*Config, error) {
 	c := new(Config)
-	err := load(c, "configs/app.yaml")
+	basePath, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+	baseConfig := filepath.Join(basePath, "configs/app.yaml")
+	err = load(c, baseConfig)
 	if err != nil {
 		return nil, err
 	}
@@ -49,6 +58,7 @@ func initConfig(configFile string) (*Config, error) {
 	if err != nil {
 		return nil, err
 	}
+	c.BasePath = basePath
 	return c, nil
 }
 
