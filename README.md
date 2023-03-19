@@ -1,10 +1,23 @@
 # go-web-quickstart
 
-go web 工程示例，可以作为一些项目工程结构参考，对一些常用功能做了简单封装。
+go web 工程示例，可以作为一些项目工程结构参考，对一些常用功能做了简单封装。支持构建docker镜像。
 
 示例中已完成了部分功能实现，方便做一些参考
 - 用户登录、注册
 - 博客查看、添加、删除、修改
+
+## 环境依赖
+
+- mysql
+- redis
+
+对应配置在`configs`目录，可以自行修改
+
+## 启动项目
+
+```bash
+go run cmd/main.go configs/app-local.yaml
+```
 
 ## 技术选型
 
