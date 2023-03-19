@@ -1,7 +1,7 @@
 export GO111MODULE=on
 
 # Binary file names.
-BINARY_NAME=web-app
+BINARY_NAME=app
 
 # Build parameters.
 BUILD_PATH=.build
@@ -16,7 +16,7 @@ build-go:
 	mkdir -p ${BUILD_PATH}
 	rm -rf ${DIST_PATH}
 	cp -r Makefile build/*.sh cmd pkg internal configs ${BUILD_PATH}
-	CGO_ENABLED=0 go build -mod=readonly -v -o $(DIST_PATH)/${BINARY_NAME} $(BUILD_PATH)/cmd/main.go
+	CGO_ENABLED=0 go build -tags=jsoniter -mod=readonly -v -o $(DIST_PATH)/${BINARY_NAME} $(BUILD_PATH)/cmd/main.go
 	cp -rf ${BUILD_PATH}/configs $(DIST_PATH)
 
 ### fmt-go:				格式化 golang 代码

@@ -8,6 +8,7 @@ import (
 	"fengjx/go-web-quickstart/internal/common/env"
 	"fengjx/go-web-quickstart/internal/endpoint/api"
 	"fmt"
+	"github.com/gin-contrib/pprof"
 	"io"
 	"net/http"
 	"os"
@@ -41,6 +42,7 @@ func (serv *ginServer) Start(ctx context.Context) {
 		gin.DefaultWriter = io.MultiWriter(f)
 	}
 	router := gin.New()
+	pprof.Register(router)
 	if env.IsProd() {
 		gin.SetMode(gin.ReleaseMode)
 		router.Use(gzip.Gzip(

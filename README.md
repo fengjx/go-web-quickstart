@@ -8,8 +8,9 @@ go web 工程示例，可以作为一些项目工程结构参考，对一些常�
 
 ## 环境依赖
 
-- mysql
-- redis
+- MySQL
+  - 初始化sql在`deployments/db`
+- Redis
 
 对应配置在`configs`目录，可以自行修改
 
@@ -36,7 +37,7 @@ go run cmd/main.go configs/app-local.yaml
 - deployments: 应用依赖
 - init: 应用启动配置
 - internal: 应用业务逻辑代码
-- pkg: 当道应用外部依然能使用的代码库
+- pkg: 放到应用外部依然能使用的代码库、工具类
 - test: 测试相关
 - tools: 项目工具，如代码生成脚本
 
