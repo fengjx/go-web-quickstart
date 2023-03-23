@@ -14,10 +14,47 @@ go web 工程示例，可以作为一些项目工程结构参考，对一些常�
 
 对应配置在`configs`目录，可以自行修改
 
+## make 指令
+
+```bash
+$ make help
+Makefile cmd:
+
+    build:                              项目打包
+    build-go:                           构建 golang 包
+    fmt-go:                             格式化 golang 代码
+    tidy:                               去掉未使用的项目依赖
+    clean:                              清理临时文件
+    help:                               Makefile 帮助
+
+```
+
 ## 启动项目
 
 ```bash
 go run cmd/main.go configs/app-local.yaml
+```
+
+## 打包
+
+```bash
+make build
+```
+
+打包后的可执行文件生成在`.dist`目录
+
+## docker
+
+打包
+```bash
+# 镜像名和版本可以自己定义
+docker build . -t web-app:1.0.0
+```
+
+启动
+```bash
+# APP_ENV 启用不同环境配置
+docker run  -p 8080:8080 -e APP_ENV=test --name webapp web-app:1.0.0
 ```
 
 ## 技术选型
@@ -28,7 +65,6 @@ go run cmd/main.go configs/app-local.yaml
 - [xorm](https://xorm.io/zh/) - orm 框架
 - [go-redis](https://github.com/redis/go-redis) redis 客户端
 - [lo](https://github.com/samber/lo) 一个类似 lodash 的集合工具类库
-- [cli](https://github.com/urfave/cli) 命令行参数解析
 
 ## 工程结构
 - build: 工程构建相关
