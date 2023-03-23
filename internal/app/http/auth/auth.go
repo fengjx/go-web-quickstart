@@ -1,8 +1,8 @@
 package auth
 
 import (
-	"fengjx/go-web-quickstart/pkg/utils"
 	"fmt"
+	"github.com/fengjx/go-web-quickstart/pkg/utils"
 	"github.com/golang-jwt/jwt/v5"
 	"time"
 )

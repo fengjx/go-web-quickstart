@@ -1,7 +1,7 @@
 package redis
 
 import (
-	"fengjx/go-web-quickstart/pkg/json"
+	"github.com/fengjx/go-web-quickstart/pkg/json"
 	"time"
 )
 

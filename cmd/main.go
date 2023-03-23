@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"fengjx/go-web-quickstart/internal/app"
+	"github.com/fengjx/go-web-quickstart/internal/app"
 	"os"
 	"os/signal"
 	"syscall"

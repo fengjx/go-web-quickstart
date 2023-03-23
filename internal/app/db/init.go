@@ -1,7 +1,7 @@
 package db
 
 import (
-	"fengjx/go-web-quickstart/internal/app/appconfig"
+	"github.com/fengjx/go-web-quickstart/internal/app/appconfig"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
 	"xorm.io/xorm"

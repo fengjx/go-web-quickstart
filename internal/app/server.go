@@ -2,12 +2,12 @@ package app
 
 import (
 	"context"
-	"fengjx/go-web-quickstart/internal/app/appconfig"
-	"fengjx/go-web-quickstart/internal/app/applog"
-	"fengjx/go-web-quickstart/internal/app/http/middleware"
-	"fengjx/go-web-quickstart/internal/common/env"
-	"fengjx/go-web-quickstart/internal/endpoint/api"
 	"fmt"
+	"github.com/fengjx/go-web-quickstart/internal/app/appconfig"
+	"github.com/fengjx/go-web-quickstart/internal/app/applog"
+	"github.com/fengjx/go-web-quickstart/internal/app/http/middleware"
+	"github.com/fengjx/go-web-quickstart/internal/common/env"
+	"github.com/fengjx/go-web-quickstart/internal/endpoint/api"
 	"github.com/gin-contrib/pprof"
 	"io"
 	"net/http"

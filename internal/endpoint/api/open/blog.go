@@ -1,12 +1,12 @@
 package open
 
 import (
-	"fengjx/go-web-quickstart/internal/app/applog"
-	"fengjx/go-web-quickstart/internal/app/http/httpcode"
-	"fengjx/go-web-quickstart/internal/base/dao/blog"
-	"fengjx/go-web-quickstart/internal/common"
-	"fengjx/go-web-quickstart/internal/service"
-	"fengjx/go-web-quickstart/pkg/utils"
+	"github.com/fengjx/go-web-quickstart/internal/app/applog"
+	"github.com/fengjx/go-web-quickstart/internal/app/http/httpcode"
+	"github.com/fengjx/go-web-quickstart/internal/base/dao/blog"
+	"github.com/fengjx/go-web-quickstart/internal/common"
+	"github.com/fengjx/go-web-quickstart/internal/service"
+	"github.com/fengjx/go-web-quickstart/pkg/utils"
 	"github.com/gin-gonic/gin"
 )
 

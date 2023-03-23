@@ -1,11 +1,11 @@
 package middleware
 
 import (
-	"fengjx/go-web-quickstart/internal/app/http/auth"
-	"fengjx/go-web-quickstart/internal/app/http/httpcode"
-	"fengjx/go-web-quickstart/internal/common"
-	"fengjx/go-web-quickstart/internal/common/env"
-	"fengjx/go-web-quickstart/pkg/utils"
+	"github.com/fengjx/go-web-quickstart/internal/app/http/auth"
+	"github.com/fengjx/go-web-quickstart/internal/app/http/httpcode"
+	"github.com/fengjx/go-web-quickstart/internal/common"
+	"github.com/fengjx/go-web-quickstart/internal/common/env"
+	"github.com/fengjx/go-web-quickstart/pkg/utils"
 	"github.com/gin-gonic/gin"
 )
 

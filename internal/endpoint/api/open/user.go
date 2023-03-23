@@ -1,9 +1,9 @@
 package open
 
 import (
-	"fengjx/go-web-quickstart/internal/app/http/httpcode"
-	"fengjx/go-web-quickstart/internal/common"
-	"fengjx/go-web-quickstart/internal/service"
+	"github.com/fengjx/go-web-quickstart/internal/app/http/httpcode"
+	"github.com/fengjx/go-web-quickstart/internal/common"
+	"github.com/fengjx/go-web-quickstart/internal/service"
 	"github.com/gin-gonic/gin"
 )
 

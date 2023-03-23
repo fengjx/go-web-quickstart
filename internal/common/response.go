@@ -1,7 +1,7 @@
 package common
 
 import (
-	"fengjx/go-web-quickstart/internal/common/env"
+	"github.com/fengjx/go-web-quickstart/internal/common/env"
 	"github.com/pkg/errors"
 )
 

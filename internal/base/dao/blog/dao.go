@@ -1,6 +1,6 @@
 package blog
 
-import "fengjx/go-web-quickstart/internal/app/db"
+import "github.com/fengjx/go-web-quickstart/internal/app/db"
 
 func FindUserBlogList(uid int64) ([]*Blog, error) {
 	var list []*Blog

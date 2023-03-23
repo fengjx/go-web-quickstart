@@ -2,8 +2,8 @@ package middleware
 
 import (
 	"bytes"
-	"fengjx/go-web-quickstart/internal/app/applog"
 	"fmt"
+	"github.com/fengjx/go-web-quickstart/internal/app/applog"
 	"net/http"
 	"net/http/httputil"
 	"os"

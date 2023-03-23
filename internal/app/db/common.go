@@ -1,9 +1,9 @@
 package db
 
 import (
-	"fengjx/go-web-quickstart/internal/app/applog"
-	"fengjx/go-web-quickstart/internal/app/redis"
 	"fmt"
+	"github.com/fengjx/go-web-quickstart/internal/app/applog"
+	"github.com/fengjx/go-web-quickstart/internal/app/redis"
 	"reflect"
 	"time"
 )

@@ -1,7 +1,7 @@
 package admin
 
 import (
-	"fengjx/go-web-quickstart/internal/app/http/middleware"
+	"github.com/fengjx/go-web-quickstart/internal/app/http/middleware"
 	"github.com/gin-gonic/gin"
 )
 

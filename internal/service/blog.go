@@ -1,10 +1,10 @@
 package service
 
 import (
-	"fengjx/go-web-quickstart/internal/app/applog"
-	"fengjx/go-web-quickstart/internal/app/db"
-	"fengjx/go-web-quickstart/internal/base/dao/blog"
-	"fengjx/go-web-quickstart/internal/common"
+	"github.com/fengjx/go-web-quickstart/internal/app/applog"
+	"github.com/fengjx/go-web-quickstart/internal/app/db"
+	"github.com/fengjx/go-web-quickstart/internal/base/dao/blog"
+	"github.com/fengjx/go-web-quickstart/internal/common"
 	"time"
 )
 

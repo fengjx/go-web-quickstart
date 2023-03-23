@@ -1,8 +1,7 @@
 package middleware
 
 import (
-	"fengjx/go-web-quickstart/internal/app/http/header"
-
+	"github.com/fengjx/go-web-quickstart/internal/app/http/header"
 	"github.com/gin-gonic/gin"
 )
 

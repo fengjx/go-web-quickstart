@@ -1,6 +1,6 @@
 package env
 
-import "fengjx/go-web-quickstart/internal/app/appconfig"
+import "github.com/fengjx/go-web-quickstart/internal/app/appconfig"
 
 func IsProd() bool {
 	return appconfig.GetEnv() == "prod"

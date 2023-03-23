@@ -1,4 +1,4 @@
-module fengjx/go-web-quickstart
+module github.com/fengjx/go-web-quickstart
 
 go 1.20
 

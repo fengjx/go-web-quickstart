@@ -1,6 +1,6 @@
 package user
 
-import "fengjx/go-web-quickstart/internal/app/db"
+import "github.com/fengjx/go-web-quickstart/internal/app/db"
 
 // GetByUsername
 // @description 通过用户名查询用户信息

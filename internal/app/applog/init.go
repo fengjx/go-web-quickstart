@@ -1,6 +1,6 @@
 package applog
 
-import "fengjx/go-web-quickstart/pkg/logger"
+import "github.com/fengjx/go-web-quickstart/pkg/logger"
 
 var Log logger.Logger
 

@@ -1,8 +1,8 @@
 package redis
 
 import (
-	"fengjx/go-web-quickstart/internal/app/applog"
 	"fmt"
+	"github.com/fengjx/go-web-quickstart/internal/app/applog"
 	"time"
 )
 
