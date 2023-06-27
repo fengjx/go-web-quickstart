@@ -1,15 +1,15 @@
 package redis
 
 import (
+	"github.com/fengjx/go-halo/utils"
 	"github.com/fengjx/go-web-quickstart/internal/app/applog"
-	"github.com/fengjx/go-web-quickstart/pkg/utils"
 	"github.com/google/uuid"
 	"time"
 )
 
 func TryLock(key string, timeout time.Duration) string {
 	version := uuid.NewString()
-	ok, err := Default().SetNX(Ctx, key, version, timeout).Result()
+	ok, err := GetDefaultClient().SetNX(Ctx, key, version, timeout).Result()
 	if err != nil && ok {
 		applog.Log.Errorf("set nx err - %s", err.Error())
 		return ""
@@ -26,7 +26,7 @@ func Unlock(key string, version string) bool {
 	end
 	`
 	keys := []string{key}
-	result, err := Default().Eval(Ctx, script, keys, version).Result()
+	result, err := GetDefaultClient().Eval(Ctx, script, keys, version).Result()
 	if err != nil {
 		applog.Log.Errorf("unlock err - %s", err.Error())
 		return false

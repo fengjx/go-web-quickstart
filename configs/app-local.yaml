@@ -4,7 +4,7 @@ server:
 db:
   default:
     type: mysql
-    dsn: root:1234@tcp(192.168.1.200:3306)/gogo?charset=utf8mb4,utf8&tls=false&timeout=10s
+    dsn: root:1234@tcp(192.168.1.200:3306)/gogo?charset=utf8mb4,utf8&tls=false&timeout=10s&parseTime=true
     show-sql: true
     max-idle: 5
     max-conn: 10

@@ -2,22 +2,16 @@ package user
 
 import "time"
 
-var Version = "v1"
-
 type User struct {
-	Id       int64      `json:",string"`
+	Id       int64      `json:"id,string"`
 	Username string     `json:"username"`
-	Pwd      string     `json:"-"`
-	Salt     string     `json:"-"`
+	Pwd      string     `json:"pwd"`
+	Salt     string     `json:"salt"`
 	Nick     string     `json:"nick"`
-	Ctime    *time.Time `json:"-"`
-	Utime    *time.Time `json:"-"`
+	Ctime    *time.Time `json:"ctime"`
+	Utime    *time.Time `json:"utime"`
 }
 
-func (receiver *User) Version() string {
-	return Version
-}
-
-func New() *User {
-	return new(User)
+func (m *User) GetID() interface{} {
+	return m.Id
 }

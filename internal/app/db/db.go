@@ -1,11 +1,13 @@
 package db
 
-import "xorm.io/xorm"
+import (
+	"github.com/jmoiron/sqlx"
+)
 
-func Default() *xorm.Engine {
-	return defaultEngine
+func GetDefaultDB() *sqlx.DB {
+	return defaultDB
 }
 
-func GetConn(name string) *xorm.Engine {
-	return engineMap[name]
+func GetDB(name string) *sqlx.DB {
+	return dbMap[name]
 }

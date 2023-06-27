@@ -1,11 +1,11 @@
 package middleware
 
 import (
+	"github.com/fengjx/go-halo/utils"
 	"github.com/fengjx/go-web-quickstart/internal/app/http/auth"
 	"github.com/fengjx/go-web-quickstart/internal/app/http/httpcode"
 	"github.com/fengjx/go-web-quickstart/internal/common"
 	"github.com/fengjx/go-web-quickstart/internal/common/env"
-	"github.com/fengjx/go-web-quickstart/pkg/utils"
 	"github.com/gin-gonic/gin"
 )
 

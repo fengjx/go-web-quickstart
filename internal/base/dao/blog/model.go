@@ -2,8 +2,6 @@ package blog
 
 import "time"
 
-var Version = "v1"
-
 type Blog struct {
 	Id         int64      `json:"id,string"`
 	Uid        int64      `json:"uid,string"`
@@ -14,10 +12,6 @@ type Blog struct {
 	Utime      *time.Time `json:"-"`
 }
 
-func (receiver *Blog) Version() string {
-	return Version
-}
-
-func New() *Blog {
-	return new(Blog)
+func (m *Blog) GetID() interface{} {
+	return m.Id
 }

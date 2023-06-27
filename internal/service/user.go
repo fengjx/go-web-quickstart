@@ -2,11 +2,11 @@ package service
 
 import (
 	"fmt"
+	"github.com/fengjx/go-halo/utils"
 	"github.com/fengjx/go-web-quickstart/internal/app/applog"
-	"github.com/fengjx/go-web-quickstart/internal/app/db"
 	"github.com/fengjx/go-web-quickstart/internal/base/dao/user"
 	"github.com/fengjx/go-web-quickstart/internal/common"
-	"github.com/fengjx/go-web-quickstart/pkg/utils"
+	"github.com/fengjx/go-web-quickstart/internal/dto"
 )
 
 var UserService = new(userService)
@@ -26,12 +26,13 @@ func (svc *userService) Register(username string, pwd string) (bool, error) {
 	}
 	salt := utils.RandomString(6)
 	cryptoPwd := utils.Md5SumString(fmt.Sprintf("%s%s", pwd, salt))
-	u := user.New()
-	u.Username = username
-	u.Pwd = cryptoPwd
-	u.Salt = salt
-	u.Nick = fmt.Sprintf("user-%s", utils.RandomString(8))
-	_, err = db.Add(u)
+	u := &user.User{
+		Username: username,
+		Nick:     fmt.Sprintf("user-%s", utils.RandomString(8)),
+		Pwd:      cryptoPwd,
+		Salt:     salt,
+	}
+	_, err = user.GetDao().Save(u, "id")
 	if err != nil {
 		applog.Log.Errorf("register user err: %s", err.Error())
 		return false, err
@@ -55,14 +56,16 @@ func (svc *userService) Login(username string, pwd string) (*user.User, error) {
 	return u, nil
 }
 
-func (svc *userService) Profile(uid int64) (*user.User, error) {
-	u := user.New()
-	err := db.GetById(uid, u)
+func (svc *userService) Profile(uid int64) (*dto.UserDTO, error) {
+	u := &user.User{}
+	err := user.GetDao().GetByID(uid, u)
 	if err != nil {
 		return nil, err
 	}
 	if u.Id == 0 {
 		return nil, nil
 	}
-	return u, nil
+	userDTO := &dto.UserDTO{}
+	userDTO.Of(u)
+	return userDTO, nil
 }

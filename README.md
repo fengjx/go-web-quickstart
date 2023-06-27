@@ -62,7 +62,7 @@ docker run  -p 8080:8080 -e APP_ENV=test --name webapp web-app:1.0.0
 - [gin](https://github.com/gin-gonic/gin) - web 框架
 - [json-iterator](http://jsoniter.com/go-tips.cn.html) - 高效 json 类库
 - [go-yaml](https://github.com/go-yaml/yaml) - yaml 文件加载
-- [xorm](https://xorm.io/zh/) - orm 框架
+- [daox](https://github.com/fengjx/daox) - 基于 sqlx + go-redis 的数据访问工具库 
 - [go-redis](https://github.com/redis/go-redis) redis 客户端
 - [lo](https://github.com/samber/lo) 一个类似 lodash 的集合工具类库
 
