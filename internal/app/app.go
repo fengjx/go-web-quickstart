@@ -7,6 +7,7 @@ import (
 	"github.com/fengjx/go-web-quickstart/internal/app/httpclient"
 	"github.com/fengjx/go-web-quickstart/internal/app/redis"
 	"github.com/fengjx/go-web-quickstart/internal/base/dao"
+	"github.com/fengjx/go-web-quickstart/internal/service"
 )
 
 func init() {
@@ -15,6 +16,7 @@ func init() {
 	redis.Init()
 	httpclient.Init()
 	dao.Init()
+	service.Init()
 }
 
 func NewServer() Server {

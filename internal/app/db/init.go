@@ -12,7 +12,7 @@ import (
 var dbMap = make(map[string]*sqlx.DB)
 var defaultDB *sqlx.DB
 
-var mapper = reflectx.NewMapperFunc("json", strings.ToTitle)
+var toLowerMapper = reflectx.NewMapperFunc("json", strings.ToLower)
 
 func Init() {
 	for k, c := range appconfig.Conf.DB {
@@ -30,7 +30,7 @@ func Init() {
 		if c.MaxConn != 0 {
 			db.SetMaxOpenConns(c.MaxConn)
 		}
-		db.Mapper = mapper
+		db.Mapper = toLowerMapper
 		dbMap[k] = db
 	}
 	defaultDB = dbMap["default"]

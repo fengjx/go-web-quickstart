@@ -9,8 +9,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var userSvc = service.UserService
-
 var loginApi *LoginApi
 
 func init() {
@@ -29,7 +27,7 @@ func (api *LoginApi) register(c *gin.Context) {
 		c.JSON(httpcode.Http400, common.ErrorUnauthorized())
 		return
 	}
-	ok, err := userSvc.Register(req.Username, req.Pwd)
+	ok, err := service.GetUserSvc().Register(req.Username, req.Pwd)
 	if err != nil {
 		c.JSON(httpcode.Http500, common.Error(err))
 		return
@@ -46,7 +44,7 @@ func (api *LoginApi) login(c *gin.Context) {
 		c.JSON(httpcode.Http400, common.ErrorBadRequest())
 		return
 	}
-	u, err := userSvc.Login(req.Username, req.Pwd)
+	u, err := service.GetUserSvc().Login(req.Username, req.Pwd)
 	if err != nil {
 		c.JSON(httpcode.Http500, common.Error(err))
 		return

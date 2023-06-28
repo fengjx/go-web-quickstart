@@ -6,4 +6,5 @@ var Log logger.Logger
 
 func Init() {
 	Log = logger.New()
+	Log.Infof("app log init")
 }

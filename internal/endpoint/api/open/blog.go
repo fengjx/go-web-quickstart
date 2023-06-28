@@ -10,10 +10,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var (
-	blogService = service.BlogService
-)
-
 var blogApi *BlogApi
 
 func init() {
@@ -31,7 +27,7 @@ func (api *BlogApi) index(c *gin.Context) {
 		Offset: utils.ToInt(c.DefaultQuery("offset", "0")),
 		Size:   utils.ToInt(c.DefaultQuery("size", "10")),
 	}
-	list, err := blogService.Page(req.Offset, req.Size)
+	list, err := service.GetBlogSvc().Page(req.Offset, req.Size)
 	if err != nil {
 		c.JSON(httpcode.Http500, common.Error(err))
 		return
@@ -49,7 +45,7 @@ func (api *BlogApi) get(c *gin.Context) {
 		c.JSON(httpcode.Http500, common.UserError(err.Error()))
 		return
 	}
-	blogBean, err := blogService.Get(req.Id)
+	blogBean, err := service.GetBlogSvc().Get(req.Id)
 	if err != nil {
 		c.JSON(httpcode.Http500, common.Error(err))
 		return
@@ -67,7 +63,7 @@ func (api *BlogApi) add(c *gin.Context) {
 		c.JSON(httpcode.Http400, common.UserError(err.Error()))
 		return
 	}
-	ok, err := blogService.Add(&blog.Blog{
+	ok, err := service.GetBlogSvc().Add(&blog.Blog{
 		Uid:     uid,
 		Title:   req.Title,
 		Content: req.Content,
@@ -101,7 +97,7 @@ func (api *BlogApi) update(c *gin.Context) {
 		Title:   req.Title,
 		Content: req.Content,
 	}
-	_, err := blogService.Update(uid, bean)
+	_, err := service.GetBlogSvc().Update(uid, bean)
 	if err != nil {
 		applog.Log.Errorf("update blog err - %s", err.Error())
 		c.JSON(httpcode.Http500, common.Error(err))
@@ -121,7 +117,7 @@ func (api *BlogApi) del(c *gin.Context) {
 		c.JSON(httpcode.Http400, common.UserError(err.Error()))
 		return
 	}
-	ok, err := blogService.Del(uid, req.Id)
+	ok, err := service.GetBlogSvc().Del(uid, req.Id)
 	if err != nil {
 		c.JSON(httpcode.Http500, common.Error(err))
 		return
