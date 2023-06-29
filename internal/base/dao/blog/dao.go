@@ -31,9 +31,9 @@ func GetDao() *Dao {
 	return dao
 }
 
-func FindUserBlogList(uid int64) ([]*Blog, error) {
+func (receiver *Dao) FindUserBlogList(uid int64) ([]*Blog, error) {
 	var list []*Blog
-	selectSQL, err := GetDao().SQLBuilder().Select().Where(
+	selectSQL, err := receiver.SQLBuilder().Select().Columns(dao.TableMeta.Columns...).Where(
 		sqlbuilder.C().Where(true, "uid = ?"),
 	).Limit(10).Sql()
 	if err != nil {
@@ -46,9 +46,10 @@ func FindUserBlogList(uid int64) ([]*Blog, error) {
 	return list, nil
 }
 
-func Page(offset int, size int) ([]*Blog, error) {
+func (receiver *Dao) Page(offset int, size int) ([]*Blog, error) {
 	var list []*Blog
-	selectSQL, err := GetDao().SQLBuilder().Select().
+	selectSQL, err := receiver.SQLBuilder().Select().
+		Columns(receiver.TableMeta.Columns...).
 		Offset(offset).
 		Limit(size).
 		Sql()

@@ -33,9 +33,9 @@ func GetDao() *Dao {
 // GetByUsername
 // @description 通过用户名查询用户信息
 // @param username 用户名
-func GetByUsername(username string) (*User, error) {
+func (receiver *Dao) GetByUsername(username string) (*User, error) {
 	user := &User{}
-	err := GetDao().GetByColumn(daox.OfKv("username", username), user)
+	err := receiver.GetByColumn(daox.OfKv("username", username), user)
 	if err != nil {
 		return nil, err
 	}

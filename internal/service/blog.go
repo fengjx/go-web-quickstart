@@ -9,6 +9,7 @@ import (
 )
 
 type blogService struct {
+	blogDao *blog.Dao
 }
 
 var blogSvc *blogService
@@ -16,14 +17,16 @@ var blogSvcInitOnce = sync.Once{}
 
 func GetBlogSvc() *blogService {
 	blogSvcInitOnce.Do(func() {
-		blogSvc = &blogService{}
+		blogSvc = &blogService{
+			blogDao: blog.GetDao(),
+		}
 	})
 	return blogSvc
 }
 
 func (receiver *blogService) Add(blogModel *blog.Blog) (bool, error) {
 	blogModel.CreateTime = time.Now().UnixMilli()
-	_, err := blog.GetDao().Save(blogModel)
+	_, err := receiver.blogDao.Save(blogModel)
 	if err != nil {
 		applog.Log.Errorf("add blog err - %s", err.Error())
 		return false, err
@@ -32,12 +35,12 @@ func (receiver *blogService) Add(blogModel *blog.Blog) (bool, error) {
 }
 
 func (receiver *blogService) Page(offset int, size int) ([]*blog.Blog, error) {
-	return blog.Page(offset, size)
+	return receiver.blogDao.Page(offset, size)
 }
 
 func (receiver *blogService) Get(id int64) (*blog.Blog, error) {
 	blogModel := &blog.Blog{}
-	err := blog.GetDao().GetByID(id, blogModel)
+	err := receiver.blogDao.GetByID(id, blogModel)
 	if err != nil {
 		applog.Log.Errorf("get blog err - %s", err.Error())
 		return nil, err
@@ -50,14 +53,14 @@ func (receiver *blogService) Get(id int64) (*blog.Blog, error) {
 
 func (receiver *blogService) Del(uid int64, id int64) (bool, error) {
 	blogModel := &blog.Blog{}
-	err := blog.GetDao().GetByID(id, blogModel)
+	err := receiver.blogDao.GetByID(id, blogModel)
 	if err != nil {
 		return false, err
 	}
 	if blogModel.Uid != uid {
 		return false, common.NewServiceErr(common.CodeUserErr, "You are not the blog owner")
 	}
-	ok, err := blog.GetDao().DeleteById(id)
+	ok, err := receiver.blogDao.DeleteById(id)
 	if err != nil {
 		applog.Log.Errorf("del blog err - %s", err.Error())
 		return false, err
@@ -67,14 +70,20 @@ func (receiver *blogService) Del(uid int64, id int64) (bool, error) {
 
 func (receiver *blogService) Update(uid int64, blogModel *blog.Blog) (bool, error) {
 	old := &blog.Blog{}
-	err := blog.GetDao().GetByID(blogModel.Id, old)
+	err := receiver.blogDao.GetByID(blogModel.Id, old)
 	if err != nil {
 		return false, err
+	}
+	if old == nil || old.Id == 0 {
+		return false, common.NewServiceErr(common.CodeUserErr, "blog not exist")
 	}
 	if old.Uid != uid {
 		return false, common.NewServiceErr(common.CodeUserErr, "You are not the blog owner")
 	}
-	ok, err := blog.GetDao().Update(blogModel)
+	ok, err := receiver.blogDao.UpdateField(blogModel.Id, map[string]interface{}{
+		"title":   blogModel.Title,
+		"content": blogModel.Content,
+	})
 	if err != nil {
 		applog.Log.Errorf("update blog err - %s", err.Error())
 		return false, err

@@ -11,6 +11,7 @@ import (
 )
 
 type userService struct {
+	userDao *user.Dao
 }
 
 var userSvc = new(userService)
@@ -18,15 +19,17 @@ var userSvcInitOnce = sync.Once{}
 
 func GetUserSvc() *userService {
 	userSvcInitOnce.Do(func() {
-		userSvc = &userService{}
+		userSvc = &userService{
+			userDao: user.GetDao(),
+		}
 	})
 	return userSvc
 }
 
 // Register
 // 用户注册
-func (svc *userService) Register(username string, pwd string) (bool, error) {
-	old, err := user.GetByUsername(username)
+func (receiver *userService) Register(username string, pwd string) (bool, error) {
+	old, err := receiver.userDao.GetByUsername(username)
 	if err != nil {
 		return false, err
 	}
@@ -49,8 +52,8 @@ func (svc *userService) Register(username string, pwd string) (bool, error) {
 	return true, nil
 }
 
-func (svc *userService) Login(username string, pwd string) (*user.User, error) {
-	u, err := user.GetByUsername(username)
+func (receiver *userService) Login(username string, pwd string) (*user.User, error) {
+	u, err := receiver.userDao.GetByUsername(username)
 	if err != nil {
 		applog.Log.Errorf("user login err: %s", err.Error())
 		return nil, err
@@ -65,7 +68,7 @@ func (svc *userService) Login(username string, pwd string) (*user.User, error) {
 	return u, nil
 }
 
-func (svc *userService) Profile(uid int64) (*dto.UserDTO, error) {
+func (receiver *userService) Profile(uid int64) (*dto.UserDTO, error) {
 	u := &user.User{}
 	err := user.GetDao().GetByID(uid, u)
 	if err != nil {
