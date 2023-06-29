@@ -4,12 +4,21 @@ import (
 	"github.com/fengjx/go-web-quickstart/internal/app/applog"
 	"github.com/fengjx/go-web-quickstart/internal/base/dao/blog"
 	"github.com/fengjx/go-web-quickstart/internal/common"
+	"sync"
 	"time"
 )
 
-var BlogService = new(blogService)
-
 type blogService struct {
+}
+
+var blogSvc *blogService
+var blogSvcInitOnce = sync.Once{}
+
+func GetBlogSvc() *blogService {
+	blogSvcInitOnce.Do(func() {
+		blogSvc = &blogService{}
+	})
+	return blogSvc
 }
 
 func (receiver *blogService) Add(blogModel *blog.Blog) (bool, error) {

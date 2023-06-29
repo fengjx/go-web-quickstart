@@ -7,11 +7,20 @@ import (
 	"github.com/fengjx/go-web-quickstart/internal/base/dao/user"
 	"github.com/fengjx/go-web-quickstart/internal/common"
 	"github.com/fengjx/go-web-quickstart/internal/dto"
+	"sync"
 )
 
-var UserService = new(userService)
-
 type userService struct {
+}
+
+var userSvc = new(userService)
+var userSvcInitOnce = sync.Once{}
+
+func GetUserSvc() *userService {
+	userSvcInitOnce.Do(func() {
+		userSvc = &userService{}
+	})
+	return userSvc
 }
 
 // Register

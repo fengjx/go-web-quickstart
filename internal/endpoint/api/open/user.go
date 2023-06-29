@@ -7,10 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var (
-	userService = service.UserService
-)
-
 var userApi = new(UserApi)
 
 type UserApi struct {
@@ -18,7 +14,7 @@ type UserApi struct {
 
 func (api *UserApi) profile(c *gin.Context) {
 	uid := c.GetInt64("uid")
-	profile, err := userService.Profile(uid)
+	profile, err := service.GetUserSvc().Profile(uid)
 	if err != nil {
 		c.JSON(httpcode.Http404, common.Error(err))
 		return
