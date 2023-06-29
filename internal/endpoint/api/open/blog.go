@@ -33,6 +33,7 @@ func (api *BlogApi) index(c *gin.Context) {
 	}
 	list, err := blogService.Page(req.Offset, req.Size)
 	if err != nil {
+		applog.Log.Errorf("query page err - %+v", err)
 		c.JSON(httpcode.Http500, common.Error(err))
 		return
 	}
