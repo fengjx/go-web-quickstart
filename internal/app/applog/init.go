@@ -38,7 +38,7 @@ func getRequestID(req *http.Request) string {
 }
 
 func Flush() {
-	logConfig := appconfig.Conf.Log
+	logConfig := appconfig.Conf.Config.Log
 	if Log != nil && logConfig.Appender != "console" {
 		Log.Warn("flush log")
 		Log.Sync()

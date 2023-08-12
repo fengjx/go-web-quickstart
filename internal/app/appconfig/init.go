@@ -1,13 +1,29 @@
 package appconfig
 
 import (
-	"fmt"
+	"log"
 	"os"
+	"path/filepath"
+
+	"github.com/spf13/viper"
 )
 
-var Conf *Config
+var Conf *appConfig
 
 func init() {
+	basePath, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+	baseConfig := filepath.Join(basePath, "configs/app.yaml")
+
+	config := viper.New()
+	config.SetConfigFile(baseConfig)
+	err = config.ReadInConfig()
+	if err != nil {
+		panic(err)
+	}
+
 	var configFile string
 	envConfigPath := os.Getenv("APP_CONFIG_PATH")
 	if envConfigPath != "" {
@@ -16,14 +32,19 @@ func init() {
 	if configFile == "" && len(os.Args) > 1 {
 		configFile = os.Args[1]
 	}
-	c, err := initConfig(configFile)
+	config.SetConfigFile(configFile)
+	err = config.MergeInConfig()
 	if err != nil {
-		info := fmt.Sprintf("Load config err - %s, custom config file: %s", err.Error(), configFile)
-		panic(info)
+		panic(err)
 	}
-	Conf = c
-}
 
-func Get() *Config {
-	return Conf
+	c := Config{}
+	err = config.Unmarshal(&c)
+	if err != nil {
+		panic(err)
+	}
+	Conf = &appConfig{
+		Viper:  config,
+		Config: c,
+	}
 }

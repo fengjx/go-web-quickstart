@@ -1,12 +1,11 @@
 package appconfig
 
-import (
-	"log"
-	"os"
-	"path/filepath"
+import "github.com/spf13/viper"
 
-	"gopkg.in/yaml.v3"
-)
+type appConfig struct {
+	*viper.Viper
+	Config
+}
 
 type Config struct {
 	Name     string
@@ -15,7 +14,6 @@ type Config struct {
 	Server   *ServerConfig
 	DB       map[string]*DbConfig
 	Redis    map[string]*RedisConfig
-	Kv       map[string]string
 	Log      *LogConfig
 }
 
@@ -49,44 +47,6 @@ type RedisConfig struct {
 	DB       int
 }
 
-func initConfig(configFile string) (*Config, error) {
-	c := new(Config)
-	basePath, err := os.Getwd()
-	if err != nil {
-		log.Fatal(err)
-	}
-	baseConfig := filepath.Join(basePath, "configs/app.yaml")
-	err = load(c, baseConfig)
-	if err != nil {
-		return nil, err
-	}
-	if configFile == "" {
-		return c, nil
-	}
-	// merge
-	err = load(c, configFile)
-	if err != nil {
-		return nil, err
-	}
-	c.BasePath = basePath
-	return c, nil
-}
-
-func load(c *Config, configFile string) error {
-	bytes, err := os.ReadFile(configFile)
-	if err != nil {
-		return err
-	}
-	if err = yaml.Unmarshal(bytes, &c); err != nil {
-		return err
-	}
-	return err
-}
-
 func GetEnv() string {
-	return Conf.Env
-}
-
-func GetProp(key string) string {
-	return Conf.Kv[key]
+	return Conf.Config.Env
 }
