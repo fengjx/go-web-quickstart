@@ -1,5 +1,5 @@
 name: go-web-app
-env: dev
+env: local
 server:
   host: "0.0.0.0"
   port: 8080
@@ -7,10 +7,10 @@ server:
     - "template"
     - "html"
   access: "./logs/access.log"
-
+log:
+  level: debug
 redis:
   default:
 
 kafka:
   default:
-

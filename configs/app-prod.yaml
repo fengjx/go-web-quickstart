@@ -1,5 +1,10 @@
+env: prod
 server:
   access: "/var/log/web/access.log"
-
+log:
+  level: info
+  path: ./logs/app.log
+  maxSize: 1024
+  maxDays: 7
 prop:
   k1: "value"

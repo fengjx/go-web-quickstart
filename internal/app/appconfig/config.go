@@ -1,10 +1,11 @@
 package appconfig
 
 import (
-	"gopkg.in/yaml.v3"
 	"log"
 	"os"
 	"path/filepath"
+
+	"gopkg.in/yaml.v3"
 )
 
 type Config struct {
@@ -15,6 +16,15 @@ type Config struct {
 	DB       map[string]*DbConfig
 	Redis    map[string]*RedisConfig
 	Kv       map[string]string
+	Log      *LogConfig
+}
+
+type LogConfig struct {
+	Appender string
+	Level    string
+	Path     string
+	MaxSize  int `yaml:"max-size"`
+	MaxDays  int `yaml:"max-days"`
 }
 
 type ServerConfig struct {

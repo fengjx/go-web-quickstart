@@ -1,6 +1,7 @@
 server:
   access: "./logs/access.log"
-
+log:
+  appender: console
 db:
   default:
     type: mysql

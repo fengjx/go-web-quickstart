@@ -1,6 +1,12 @@
+env: test
 server:
   access: "/var/log/web/access.log"
-
+log:
+  appender: file
+  level: debug
+  path: ./logs/app.log
+  max-size: 1024
+  max-days: 7
 db:
   default:
     type: mysql
@@ -8,7 +14,6 @@ db:
     show-sql: true
     max-idle: 5
     max-conn: 10
-
 redis:
   default:
     addr: 192.168.1.200:6379

@@ -2,12 +2,14 @@ package logger
 
 import (
 	"context"
-	"net/http"
 
-	"github.com/google/uuid"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"go.uber.org/zap/zaptest/observer"
+	"gopkg.in/natefinch/lumberjack.v2"
+)
+
+const (
+	RequestIDKey = "X-Request-Id"
 )
 
 type Logger interface {
@@ -24,21 +26,32 @@ type Logger interface {
 	Warnf(format string, args ...interface{})
 	Errorf(format string, args ...interface{})
 	Panicf(format string, args ...interface{})
+
+	Sync()
 }
 
 type logger struct {
 	*zap.SugaredLogger
 }
 
-type contextKey int
+func New(logLevel string, logFile string, maxSizeMB int, maxDays int) Logger {
+	w := zapcore.AddSync(&lumberjack.Logger{
+		Filename:   logFile,
+		MaxSize:    maxSizeMB,
+		MaxBackups: 3,
+		MaxAge:     maxDays,
+	})
+	core := zapcore.NewCore(
+		zapcore.NewJSONEncoder(zap.NewProductionEncoderConfig()),
+		w,
+		GetLogLevel(logLevel),
+	)
+	l := zap.New(core)
+	return NewWithZap(l)
+}
 
-const (
-	requestIDKey contextKey = iota
-	correlationIDKey
-)
-
-func New() Logger {
-	l, _ := zap.NewProduction()
+func NewConsole() Logger {
+	l, _ := zap.NewDevelopment()
 	return NewWithZap(l)
 }
 
@@ -46,18 +59,10 @@ func NewWithZap(l *zap.Logger) Logger {
 	return &logger{l.Sugar()}
 }
 
-func NewForTest() (Logger, *observer.ObservedLogs) {
-	core, recorded := observer.New(zapcore.InfoLevel)
-	return NewWithZap(zap.New(core)), recorded
-}
-
 func (l *logger) With(ctx context.Context, args ...interface{}) Logger {
 	if ctx != nil {
-		if id, ok := ctx.Value(requestIDKey).(string); ok {
-			args = append(args, zap.String("request_id", id))
-		}
-		if id, ok := ctx.Value(correlationIDKey).(string); ok {
-			args = append(args, zap.String("correlation_id", id))
+		if id, ok := ctx.Value(RequestIDKey).(string); ok {
+			args = append(args, zap.String("traceId", id))
 		}
 	}
 	if len(args) > 0 {
@@ -66,22 +71,27 @@ func (l *logger) With(ctx context.Context, args ...interface{}) Logger {
 	return l
 }
 
-func WithRequest(ctx context.Context, req *http.Request) context.Context {
-	id := getRequestID(req)
-	if id == "" {
-		id = uuid.New().String()
-	}
-	ctx = context.WithValue(ctx, requestIDKey, id)
-	if id := getCorrelationID(req); id != "" {
-		ctx = context.WithValue(ctx, correlationIDKey, id)
-	}
-	return ctx
+func (l *logger) Sync() {
+	l.Sync()
 }
 
-func getCorrelationID(req *http.Request) string {
-	return req.Header.Get("X-Correlation-ID")
-}
-
-func getRequestID(req *http.Request) string {
-	return req.Header.Get("X-Request-ID")
+func GetLogLevel(logLevel string) zapcore.Level {
+	var level zapcore.Level
+	switch logLevel {
+	case "panic":
+		level = zapcore.PanicLevel
+	case "dpanic":
+		level = zapcore.DPanicLevel
+	case "error":
+		level = zapcore.ErrorLevel
+	case "warn":
+		level = zapcore.WarnLevel
+	case "info":
+		level = zapcore.InfoLevel
+	case "debug":
+		level = zapcore.DebugLevel
+	default:
+		level = zapcore.InfoLevel
+	}
+	return level
 }
