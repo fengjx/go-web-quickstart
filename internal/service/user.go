@@ -2,24 +2,26 @@ package service
 
 import (
 	"fmt"
+	"sync"
+
 	"github.com/fengjx/go-halo/utils"
+
 	"github.com/fengjx/go-web-quickstart/internal/app/applog"
 	"github.com/fengjx/go-web-quickstart/internal/base/dao/user"
 	"github.com/fengjx/go-web-quickstart/internal/common"
 	"github.com/fengjx/go-web-quickstart/internal/dto"
-	"sync"
 )
 
-type userService struct {
+type UserService struct {
 	userDao *user.Dao
 }
 
-var userSvc = new(userService)
+var userSvc = new(UserService)
 var userSvcInitOnce = sync.Once{}
 
-func GetUserSvc() *userService {
+func GetUserSvc() *UserService {
 	userSvcInitOnce.Do(func() {
-		userSvc = &userService{
+		userSvc = &UserService{
 			userDao: user.GetDao(),
 		}
 	})
@@ -28,7 +30,7 @@ func GetUserSvc() *userService {
 
 // Register
 // 用户注册
-func (receiver *userService) Register(username string, pwd string) (bool, error) {
+func (receiver *UserService) Register(username string, pwd string) (bool, error) {
 	old, err := receiver.userDao.GetByUsername(username)
 	if err != nil {
 		return false, err
@@ -44,7 +46,7 @@ func (receiver *userService) Register(username string, pwd string) (bool, error)
 		Pwd:      cryptoPwd,
 		Salt:     salt,
 	}
-	_, err = user.GetDao().Save(u, "id")
+	_, err = user.GetDao().Save(u, "ctime", "utime")
 	if err != nil {
 		applog.Log.Errorf("register user err: %s", err.Error())
 		return false, err
@@ -52,7 +54,7 @@ func (receiver *userService) Register(username string, pwd string) (bool, error)
 	return true, nil
 }
 
-func (receiver *userService) Login(username string, pwd string) (*user.User, error) {
+func (receiver *UserService) Login(username string, pwd string) (*user.User, error) {
 	u, err := receiver.userDao.GetByUsername(username)
 	if err != nil {
 		applog.Log.Errorf("user login err: %s", err.Error())
@@ -68,7 +70,7 @@ func (receiver *userService) Login(username string, pwd string) (*user.User, err
 	return u, nil
 }
 
-func (receiver *userService) Profile(uid int64) (*dto.UserDTO, error) {
+func (receiver *UserService) Profile(uid int64) (*dto.UserDTO, error) {
 	u := &user.User{}
 	err := user.GetDao().GetByID(uid, u)
 	if err != nil {

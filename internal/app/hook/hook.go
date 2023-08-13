@@ -1,26 +1,46 @@
 package hook
 
-type hookFun func()
+import (
+	"sort"
+)
+
+// order 越小优先级越高
+type hookFun struct {
+	handler func()
+	order   int
+}
 
 var startHooks []hookFun
 var stopHooks []hookFun
 
-func AddStartHook(fun hookFun) {
-	startHooks = append(startHooks, fun)
+func AddStartHook(handler func(), order int) {
+	startHooks = append(startHooks, hookFun{
+		handler: handler,
+		order:   order,
+	})
+	sort.Slice(startHooks, func(i, j int) bool {
+		return startHooks[i].order < startHooks[j].order
+	})
 }
 
-func AddStopHook(fun hookFun) {
-	stopHooks = append(stopHooks, fun)
+func AddStopHook(handler func(), order int) {
+	stopHooks = append(stopHooks, hookFun{
+		handler: handler,
+		order:   order,
+	})
+	sort.Slice(stopHooks, func(i, j int) bool {
+		return stopHooks[i].order < stopHooks[j].order
+	})
 }
 
 func OnStart() {
 	for _, hook := range startHooks {
-		hook()
+		hook.handler()
 	}
 }
 
 func OnStop() {
 	for _, hook := range stopHooks {
-		hook()
+		hook.handler()
 	}
 }

@@ -1,11 +1,13 @@
 package user
 
 import (
-	"github.com/fengjx/daox"
-	"github.com/fengjx/go-web-quickstart/internal/app/db"
-	"github.com/fengjx/go-web-quickstart/internal/app/redis"
 	"reflect"
 	"sync"
+
+	"github.com/fengjx/daox"
+
+	"github.com/fengjx/go-web-quickstart/internal/app/db"
+	"github.com/fengjx/go-web-quickstart/internal/app/redis"
 )
 
 var once sync.Once
@@ -23,6 +25,7 @@ func GetDao() *Dao {
 				"user",
 				"id",
 				reflect.TypeOf(&User{}),
+				daox.IsAutoIncrement(),
 				daox.WithCache(redis.GetDefaultClient()),
 			),
 		}

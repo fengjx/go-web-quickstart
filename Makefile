@@ -18,6 +18,7 @@ build-go:
 	cp -r Makefile build/*.sh cmd pkg internal configs ${BUILD_PATH}
 	CGO_ENABLED=0 go build -tags=jsoniter -mod=readonly -v -o $(DIST_PATH)/${BINARY_NAME} $(BUILD_PATH)/cmd/main.go
 	cp -rf ${BUILD_PATH}/configs $(DIST_PATH)
+	rm -rf ${BUILD_PATH}
 
 ### fmt-go:				格式化 golang 代码
 fmt-go:

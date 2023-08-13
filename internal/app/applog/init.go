@@ -2,6 +2,8 @@ package applog
 
 import (
 	"context"
+	"log"
+	"math"
 	"net/http"
 
 	"github.com/google/uuid"
@@ -21,7 +23,7 @@ func Init() {
 		Log = logger.New(logConfig.Level, logConfig.Path, logConfig.MaxSize, logConfig.MaxDays)
 	}
 	Log.Infof("app log init")
-	hook.AddStopHook(Flush)
+	hook.AddStopHook(Flush, math.MaxInt)
 }
 
 func WithRequest(ctx context.Context, req *http.Request) context.Context {
@@ -38,9 +40,9 @@ func getRequestID(req *http.Request) string {
 }
 
 func Flush() {
+	log.Println("flush log")
 	logConfig := appconfig.Conf.Config.Log
 	if Log != nil && logConfig.Appender != "console" {
-		Log.Warn("flush log")
 		Log.Sync()
 	}
 }

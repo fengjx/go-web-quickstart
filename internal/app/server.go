@@ -2,31 +2,36 @@ package app
 
 import (
 	"context"
+	"errors"
 	"fmt"
-	"github.com/fengjx/go-web-quickstart/internal/app/appconfig"
-	"github.com/fengjx/go-web-quickstart/internal/app/applog"
-	"github.com/fengjx/go-web-quickstart/internal/app/http/middleware"
-	"github.com/fengjx/go-web-quickstart/internal/common/env"
-	"github.com/fengjx/go-web-quickstart/internal/endpoint/api"
-	"github.com/gin-contrib/pprof"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/gin-contrib/pprof"
+
+	"github.com/fengjx/go-web-quickstart/internal/app/appconfig"
+	"github.com/fengjx/go-web-quickstart/internal/app/applog"
+	"github.com/fengjx/go-web-quickstart/internal/app/hook"
+	"github.com/fengjx/go-web-quickstart/internal/app/http/middleware"
+	"github.com/fengjx/go-web-quickstart/internal/common/env"
+	"github.com/fengjx/go-web-quickstart/internal/endpoint/api"
 
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
 )
 
 type Server interface {
-	Start(ctx context.Context)
+	Start()
 	Shutdown()
 }
 
 type ginServer struct {
 }
 
-func (serv *ginServer) Start(ctx context.Context) {
+func (serv *ginServer) Start() {
 	defer func() {
 		if err := recover(); err != nil {
 			applog.Log.Error(err)
@@ -69,16 +74,8 @@ func (serv *ginServer) Start(ctx context.Context) {
 		Addr:    fmt.Sprintf("%s:%d", serverConfig.Host, serverConfig.Port),
 		Handler: router,
 	}
-	applog.Log.Infof("server: listening on %s [%s]", hs.Addr, time.Since(start))
+	applog.Log.Infof("server listening on %s [%s]", hs.Addr, time.Since(start))
 	go startHttp(hs)
-
-	// Graceful HTTP server shutdown.
-	<-ctx.Done()
-	applog.Log.Info("server: shutting down")
-	err := hs.Close()
-	if err != nil {
-		applog.Log.Errorf("server: shutdown failed (%s)", err)
-	}
 }
 
 func (serv *ginServer) Shutdown() {
@@ -86,12 +83,21 @@ func (serv *ginServer) Shutdown() {
 }
 
 // startHttp starts the web server in http mode.
-func startHttp(s *http.Server) {
-	if err := s.ListenAndServe(); err != nil {
-		if err == http.ErrServerClosed {
-			applog.Log.Info("server: shutdown complete")
+func startHttp(srv *http.Server) {
+	// 首先退出 http server 停止用户请求
+	hook.AddStopHook(func() {
+		// Graceful HTTP server shutdown.
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		defer cancel()
+		if err := srv.Shutdown(ctx); err != nil {
+			applog.Log.Error("error while shutting down server: %v", err)
+			log.Fatalf("error while shutting down server: %v", err)
 		} else {
-			applog.Log.Errorf("server: %s", err)
+			log.Println("server was shutdown gracefully")
+			applog.Log.Infof("server was shutdown gracefully")
 		}
+	}, 1)
+	if err := srv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+		log.Fatalf("listen: %s\n", err)
 	}
 }

@@ -1,8 +1,6 @@
 package app
 
 import (
-	"context"
-
 	_ "github.com/fengjx/go-web-quickstart/internal/app/appconfig"
 	"github.com/fengjx/go-web-quickstart/internal/app/applog"
 	"github.com/fengjx/go-web-quickstart/internal/app/db"
@@ -27,11 +25,11 @@ func newServer() Server {
 	return serv
 }
 
-func Start(ctx context.Context) {
-	newServer().Start(ctx)
+func Start() {
+	newServer().Start()
 	hook.OnStart()
 }
 
-func Stop(ctx context.Context) {
+func Stop() {
 	hook.OnStop()
 }

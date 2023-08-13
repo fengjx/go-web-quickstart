@@ -1,31 +1,32 @@
 package service
 
 import (
+	"sync"
+	"time"
+
 	"github.com/fengjx/go-web-quickstart/internal/app/applog"
 	"github.com/fengjx/go-web-quickstart/internal/base/dao/blog"
 	"github.com/fengjx/go-web-quickstart/internal/common"
-	"sync"
-	"time"
 )
 
-type blogService struct {
+type BlogService struct {
 	blogDao *blog.Dao
 }
 
-var blogSvc *blogService
+var blogSvc *BlogService
 var blogSvcInitOnce = sync.Once{}
 
-func GetBlogSvc() *blogService {
+func GetBlogSvc() *BlogService {
 	blogSvcInitOnce.Do(func() {
-		blogSvc = &blogService{
+		blogSvc = &BlogService{
 			blogDao: blog.GetDao(),
 		}
 	})
 	return blogSvc
 }
 
-func (receiver *blogService) Add(blogModel *blog.Blog) (bool, error) {
-	blogModel.CreateTime = time.Now().UnixMilli()
+func (receiver *BlogService) Add(blogModel *blog.Blog) (bool, error) {
+	blogModel.CreateTime = time.Now().Unix()
 	_, err := receiver.blogDao.Save(blogModel)
 	if err != nil {
 		applog.Log.Errorf("add blog err - %s", err.Error())
@@ -34,11 +35,11 @@ func (receiver *blogService) Add(blogModel *blog.Blog) (bool, error) {
 	return true, nil
 }
 
-func (receiver *blogService) Page(offset int, size int) ([]*blog.Blog, error) {
+func (receiver *BlogService) Page(offset int, size int) ([]*blog.Blog, error) {
 	return receiver.blogDao.Page(offset, size)
 }
 
-func (receiver *blogService) Get(id int64) (*blog.Blog, error) {
+func (receiver *BlogService) Get(id int64) (*blog.Blog, error) {
 	blogModel := &blog.Blog{}
 	err := receiver.blogDao.GetByID(id, blogModel)
 	if err != nil {
@@ -51,7 +52,7 @@ func (receiver *blogService) Get(id int64) (*blog.Blog, error) {
 	return blogModel, nil
 }
 
-func (receiver *blogService) Del(uid int64, id int64) (bool, error) {
+func (receiver *BlogService) Del(uid int64, id int64) (bool, error) {
 	blogModel := &blog.Blog{}
 	err := receiver.blogDao.GetByID(id, blogModel)
 	if err != nil {
@@ -68,7 +69,7 @@ func (receiver *blogService) Del(uid int64, id int64) (bool, error) {
 	return ok, nil
 }
 
-func (receiver *blogService) Update(uid int64, blogModel *blog.Blog) (bool, error) {
+func (receiver *BlogService) Update(uid int64, blogModel *blog.Blog) (bool, error) {
 	old := &blog.Blog{}
 	err := receiver.blogDao.GetByID(blogModel.Id, old)
 	if err != nil {
