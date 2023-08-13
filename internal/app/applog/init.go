@@ -6,11 +6,11 @@ import (
 	"math"
 	"net/http"
 
+	"github.com/fengjx/go-halo/logger"
 	"github.com/google/uuid"
 
 	"github.com/fengjx/go-web-quickstart/internal/app/appconfig"
 	"github.com/fengjx/go-web-quickstart/internal/app/hook"
-	"github.com/fengjx/go-web-quickstart/pkg/logger"
 )
 
 var Log logger.Logger
