@@ -73,8 +73,8 @@ github.com/envoyproxy/go-control-plane v0.9.9-0.20201210154907-fd9021fe5dad/go.m
 github.com/envoyproxy/protoc-gen-validate v0.1.0/go.mod h1:iSmxcyjqTsJpI2R4NaDN7+kN2VEUnK/pcBlmesArF7c=
 github.com/fengjx/daox v0.0.0-20230629014231-1aaf066670ae h1:dOH08YmUqiYkaKZJOoZKI+lrC0ocQQ499dWtJcrs27c=
 github.com/fengjx/daox v0.0.0-20230629014231-1aaf066670ae/go.mod h1:oVCQi/fFSqTYNb0QTMrQc33YRofXDmIo4clyjf0mqeA=
-github.com/fengjx/go-halo v0.0.0-20230813125221-60771e0581cf h1:9j9YCCiM4oLScLWKwTfv/8eoqzhj+NqKth0aJL8gZXo=
-github.com/fengjx/go-halo v0.0.0-20230813125221-60771e0581cf/go.mod h1:O7O4IkRXXzlHvwmlYfX28zrITlZUjhVjxIkliLFiQqA=
+github.com/fengjx/go-halo v0.0.0-20230816140352-fdea8646728f h1:uDs1k/oGIZgJDY24BObQ2z4tFtNcor6moQymxp3JSzo=
+github.com/fengjx/go-halo v0.0.0-20230816140352-fdea8646728f/go.mod h1:iaTBTE1bj1rySSU/aOI8tDa67npSqHR649CQFzBSxb8=
 github.com/frankban/quicktest v1.14.4 h1:g2rn0vABPOOXmZUj+vbmUp0lPoXEMuhTpIluN0XL9UY=
 github.com/fsnotify/fsnotify v1.6.0 h1:n+5WquG0fcWoWp6xPWfHdbskMCQaFnG6PfBrh1Ky4HY=
 github.com/fsnotify/fsnotify v1.6.0/go.mod h1:sl3t1tCWJFWoRz9R8WJCbQihKKwmorjAbSClcnxKAGw=
@@ -219,6 +219,8 @@ github.com/modern-go/reflect2 v1.0.2/go.mod h1:yWuevngMOJpCy52FWWMvUC8ws7m/LJsjY
 github.com/pelletier/go-toml/v2 v2.0.1/go.mod h1:r9LEWfGN8R5k0VXJ+0BkIe7MYkRdwZOjgMj2KwnJFUo=
 github.com/pelletier/go-toml/v2 v2.0.8 h1:0ctb6s9mE31h0/lhu+J6OPmVeDxJn+kYnJc2jZR9tGQ=
 github.com/pelletier/go-toml/v2 v2.0.8/go.mod h1:vuYfssBdrU2XDZ9bYydBu6t+6a6PYNcZljzZR9VXg+4=
+github.com/petermattis/goid v0.0.0-20230808133559-b036b712a89b h1:vab8deKC4QoIfm9fJM59iuNz1ELGsuLoYYpiF+pHiG8=
+github.com/petermattis/goid v0.0.0-20230808133559-b036b712a89b/go.mod h1:pxMtw7cyUw6B2bRH0ZBANSPg+AoSud1I1iyJHI69jH4=
 github.com/pkg/diff v0.0.0-20210226163009-20ebb0f2a09e/go.mod h1:pJLUxLENpZxwdsKMEsNbx1VGcRFpLqf3715MtcvvzbA=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=

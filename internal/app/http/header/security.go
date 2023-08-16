@@ -9,4 +9,5 @@ const (
 	XSSProtection           = "X-XSS-Protection"           // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection
 	FrameOptions            = "X-Frame-Options"            // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
 	ForwardedProto          = "X-Forwarded-Proto"          // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Proto
+	RequestID               = "X-Request-Id"
 )

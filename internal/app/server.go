@@ -58,6 +58,7 @@ func (serv *ginServer) Start() {
 
 	// Register common middleware.
 	router.Use(
+		middleware.Trace(),
 		middleware.Recovery(),
 		middleware.Security(),
 	)

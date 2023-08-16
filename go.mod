@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/fengjx/daox v0.0.0-20230629014231-1aaf066670ae
-	github.com/fengjx/go-halo v0.0.0-20230813125221-60771e0581cf
+	github.com/fengjx/go-halo v0.0.0-20230816140352-fdea8646728f
 	github.com/gin-contrib/gzip v0.0.6
 	github.com/gin-contrib/pprof v1.4.0
 	github.com/gin-gonic/gin v1.9.1
@@ -40,6 +40,7 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.8 // indirect
+	github.com/petermattis/goid v0.0.0-20230808133559-b036b712a89b // indirect
 	github.com/samber/lo v1.38.1 // indirect
 	github.com/spf13/afero v1.9.5 // indirect
 	github.com/spf13/cast v1.5.1 // indirect

@@ -2,12 +2,13 @@ package open
 
 import (
 	"github.com/fengjx/go-halo/utils"
+	"github.com/gin-gonic/gin"
+
 	"github.com/fengjx/go-web-quickstart/internal/app/applog"
 	"github.com/fengjx/go-web-quickstart/internal/app/http/httpcode"
 	"github.com/fengjx/go-web-quickstart/internal/base/dao/blog"
 	"github.com/fengjx/go-web-quickstart/internal/common"
 	"github.com/fengjx/go-web-quickstart/internal/service"
-	"github.com/gin-gonic/gin"
 )
 
 var blogApi *BlogApi
@@ -29,7 +30,7 @@ func (api *BlogApi) index(c *gin.Context) {
 	}
 	list, err := service.GetBlogSvc().Page(req.Offset, req.Size)
 	if err != nil {
-		applog.Log.Errorf("query page err - %+v", err)
+		applog.Log.With(c.Copy()).Errorf("query page err - %+v", err)
 		c.JSON(httpcode.Http500, common.Error(err))
 		return
 	}

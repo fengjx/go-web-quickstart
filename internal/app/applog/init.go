@@ -1,13 +1,10 @@
 package applog
 
 import (
-	"context"
 	"log"
 	"math"
-	"net/http"
 
 	"github.com/fengjx/go-halo/logger"
-	"github.com/google/uuid"
 
 	"github.com/fengjx/go-web-quickstart/internal/app/appconfig"
 	"github.com/fengjx/go-web-quickstart/internal/app/hook"
@@ -26,23 +23,11 @@ func Init() {
 	hook.AddStopHook(Flush, math.MaxInt)
 }
 
-func WithRequest(ctx context.Context, req *http.Request) context.Context {
-	id := getRequestID(req)
-	if id == "" {
-		id = uuid.New().String()
-	}
-	ctx = context.WithValue(ctx, logger.RequestIDKey, id)
-	return ctx
-}
-
-func getRequestID(req *http.Request) string {
-	return req.Header.Get(logger.RequestIDKey)
-}
-
 func Flush() {
-	log.Println("flush log")
 	logConfig := appconfig.Conf.Config.Log
 	if Log != nil && logConfig.Appender != "console" {
-		Log.Sync()
+		log.Println("flush log")
+		Log.Warn("flush log")
+		Log.Flush()
 	}
 }

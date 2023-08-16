@@ -1,12 +1,13 @@
 package open
 
 import (
+	"github.com/gin-gonic/gin"
+
 	"github.com/fengjx/go-web-quickstart/internal/app/applog"
 	"github.com/fengjx/go-web-quickstart/internal/app/http/auth"
 	"github.com/fengjx/go-web-quickstart/internal/app/http/httpcode"
 	"github.com/fengjx/go-web-quickstart/internal/common"
 	"github.com/fengjx/go-web-quickstart/internal/service"
-	"github.com/gin-gonic/gin"
 )
 
 var loginApi *LoginApi
@@ -29,6 +30,7 @@ func (api *LoginApi) register(c *gin.Context) {
 	}
 	ok, err := service.GetUserSvc().Register(req.Username, req.Pwd)
 	if err != nil {
+		applog.Log.With(c.Copy(), "param.username", req.Username).Info("user register err")
 		c.JSON(httpcode.Http500, common.Error(err))
 		return
 	}
@@ -54,7 +56,7 @@ func (api *LoginApi) login(c *gin.Context) {
 		c.JSON(httpcode.Http500, common.UserError("login fail"))
 		return
 	}
-	applog.Log.Infof("user login success: %d", u.Id)
+	applog.Log.With(c.Copy()).Infof("user login success: %d", u.Id)
 	c.JSON(httpcode.Http200, common.Data(map[string]interface{}{
 		"token": tokenString,
 	}))

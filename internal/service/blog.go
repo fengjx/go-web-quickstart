@@ -86,7 +86,7 @@ func (receiver *BlogService) Update(uid int64, blogModel *blog.Blog) (bool, erro
 		"content": blogModel.Content,
 	})
 	if err != nil {
-		applog.Log.Errorf("update blog err - %s", err.Error())
+		applog.Log.With(nil).Errorf("update blog err - %s", err.Error())
 		return false, err
 	}
 	return ok, nil
