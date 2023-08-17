@@ -11,10 +11,10 @@ type Config struct {
 	Name     string
 	Env      string
 	BasePath string
-	Server   *ServerConfig
+	Server   ServerConfig
 	DB       map[string]*DbConfig
 	Redis    map[string]*RedisConfig
-	Log      *LogConfig
+	Log      LogConfig
 }
 
 type LogConfig struct {
