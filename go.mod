@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/fengjx/daox v0.0.0-20230629014231-1aaf066670ae
-	github.com/fengjx/go-halo v0.0.0-20230816140352-fdea8646728f
+	github.com/fengjx/go-halo v0.0.0-20230820163242-e18376456fe9
 	github.com/gin-contrib/gzip v0.0.6
 	github.com/gin-contrib/pprof v1.4.0
 	github.com/gin-gonic/gin v1.9.1

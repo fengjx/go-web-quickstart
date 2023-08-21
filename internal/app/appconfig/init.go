@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/mitchellh/mapstructure"
 	"github.com/spf13/viper"
 )
 
@@ -15,7 +16,9 @@ func init() {
 	loadBase(viperConfig)
 	mergeConfig(viperConfig)
 	c := Config{}
-	err := viperConfig.Unmarshal(&c)
+	err := viperConfig.Unmarshal(&c, func(decoderConfig *mapstructure.DecoderConfig) {
+		decoderConfig.TagName = "yaml"
+	})
 	if err != nil {
 		panic(err)
 	}

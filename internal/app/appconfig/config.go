@@ -8,43 +8,44 @@ type appConfig struct {
 }
 
 type Config struct {
-	Name     string
-	Env      string
-	BasePath string
-	Server   ServerConfig
-	DB       map[string]*DbConfig
-	Redis    map[string]*RedisConfig
-	Log      LogConfig
+	Name     string                  `yaml:"name"`
+	Env      string                  `yaml:"env"`
+	BasePath string                  `yaml:"base-path"`
+	Server   ServerConfig            `yaml:"server"`
+	DB       map[string]*DbConfig    `yaml:"db"`
+	Redis    map[string]*RedisConfig `yaml:"redis"`
+	Log      LogConfig               `yaml:"log"`
 }
 
 type LogConfig struct {
-	Appender string
-	Level    string
-	Path     string
-	MaxSize  int `yaml:"max-size"`
-	MaxDays  int `yaml:"max-days"`
+	Appender  string `yaml:"appender"`
+	Level     string `yaml:"level"`
+	Path      string `yaml:"path"`
+	MaxSize   int    `yaml:"max-size"`
+	MaxDays   int    `yaml:"max-days"`
+	OpenTrace bool   `yaml:"open-trace"`
 }
 
 type ServerConfig struct {
-	Host       string
-	Port       int
-	Access     string
-	Template   []string
-	AuthSecret string `yaml:"auth-secret"`
+	Host       string   `yaml:"host"`
+	Port       int      `yaml:"port"`
+	Access     string   `yaml:"access"`
+	Template   []string `yaml:"template"`
+	AuthSecret string   `yaml:"auth-secret"`
 }
 
 type DbConfig struct {
-	Type    string
-	Dsn     string
-	MaxIdle int  `yaml:"max-idle"`
-	MaxConn int  `yaml:"max-conn"`
-	ShowSQL bool `yaml:"show-sql"`
+	Type    string `yaml:"type"`
+	Dsn     string `yaml:"dsn"`
+	MaxIdle int    `yaml:"max-idle"`
+	MaxConn int    `yaml:"max-conn"`
+	ShowSQL bool   `yaml:"show-sql"`
 }
 
 type RedisConfig struct {
-	Addr     string
-	Password string
-	DB       int
+	Addr     string `yaml:"addr"`
+	Password string `yaml:"password"`
+	DB       int    `yaml:"db"`
 }
 
 func GetEnv() string {

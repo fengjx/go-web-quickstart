@@ -75,6 +75,14 @@ github.com/fengjx/daox v0.0.0-20230629014231-1aaf066670ae h1:dOH08YmUqiYkaKZJOoZ
 github.com/fengjx/daox v0.0.0-20230629014231-1aaf066670ae/go.mod h1:oVCQi/fFSqTYNb0QTMrQc33YRofXDmIo4clyjf0mqeA=
 github.com/fengjx/go-halo v0.0.0-20230816140352-fdea8646728f h1:uDs1k/oGIZgJDY24BObQ2z4tFtNcor6moQymxp3JSzo=
 github.com/fengjx/go-halo v0.0.0-20230816140352-fdea8646728f/go.mod h1:iaTBTE1bj1rySSU/aOI8tDa67npSqHR649CQFzBSxb8=
+github.com/fengjx/go-halo v0.0.0-20230820052748-b94b2de36573 h1:fqgitOPcXVcQghLh1BdJxj3ZULikNOPPpjDirkvv2o0=
+github.com/fengjx/go-halo v0.0.0-20230820052748-b94b2de36573/go.mod h1:iaTBTE1bj1rySSU/aOI8tDa67npSqHR649CQFzBSxb8=
+github.com/fengjx/go-halo v0.0.0-20230820073338-28604e445840 h1:QMWUTn4oI2T5HPK0w7Ok5sL3Kdeyip/c2XddRL1D5cs=
+github.com/fengjx/go-halo v0.0.0-20230820073338-28604e445840/go.mod h1:iaTBTE1bj1rySSU/aOI8tDa67npSqHR649CQFzBSxb8=
+github.com/fengjx/go-halo v0.0.0-20230820085451-6fad321f11be h1:pe6Sny2WLAp0WjnwP3YymzZfTMHCqVHmDnIzywf8yZQ=
+github.com/fengjx/go-halo v0.0.0-20230820085451-6fad321f11be/go.mod h1:iaTBTE1bj1rySSU/aOI8tDa67npSqHR649CQFzBSxb8=
+github.com/fengjx/go-halo v0.0.0-20230820163242-e18376456fe9 h1:o7fCUgiEFqlwXDsAtRUIw80FTzJ00INxY0Ayjoyg58w=
+github.com/fengjx/go-halo v0.0.0-20230820163242-e18376456fe9/go.mod h1:iaTBTE1bj1rySSU/aOI8tDa67npSqHR649CQFzBSxb8=
 github.com/frankban/quicktest v1.14.4 h1:g2rn0vABPOOXmZUj+vbmUp0lPoXEMuhTpIluN0XL9UY=
 github.com/fsnotify/fsnotify v1.6.0 h1:n+5WquG0fcWoWp6xPWfHdbskMCQaFnG6PfBrh1Ky4HY=
 github.com/fsnotify/fsnotify v1.6.0/go.mod h1:sl3t1tCWJFWoRz9R8WJCbQihKKwmorjAbSClcnxKAGw=

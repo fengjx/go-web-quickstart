@@ -48,7 +48,7 @@ func (receiver *UserService) Register(username string, pwd string) (bool, error)
 	}
 	_, err = user.GetDao().Save(u, "ctime", "utime")
 	if err != nil {
-		applog.Log.With(nil).Errorf("register user err: %s", err.Error())
+		applog.Log.Errorf("register user err: %s", err.Error())
 		return false, err
 	}
 	return true, nil
