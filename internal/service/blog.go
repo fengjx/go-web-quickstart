@@ -45,12 +45,12 @@ func (receiver *BlogService) Page(offset int, size int) ([]*blog.Blog, error) {
 
 func (receiver *BlogService) Get(id int64) (*blog.Blog, error) {
 	blogModel := &blog.Blog{}
-	err := receiver.blogDao.GetByID(id, blogModel)
+	exist, err := receiver.blogDao.GetByID(id, blogModel)
 	if err != nil {
 		applog.Log.Errorf("get blog err - %s", err.Error())
 		return nil, err
 	}
-	if blogModel.Id == 0 {
+	if !exist {
 		return nil, nil
 	}
 	return blogModel, nil
@@ -58,9 +58,12 @@ func (receiver *BlogService) Get(id int64) (*blog.Blog, error) {
 
 func (receiver *BlogService) Del(uid int64, id int64) (bool, error) {
 	blogModel := &blog.Blog{}
-	err := receiver.blogDao.GetByID(id, blogModel)
+	exist, err := receiver.blogDao.GetByID(id, blogModel)
 	if err != nil {
 		return false, err
+	}
+	if !exist {
+		return false, common.NewServiceErr(common.CodeUserErr, "user not found")
 	}
 	if blogModel.Uid != uid {
 		return false, common.NewServiceErr(common.CodeUserErr, "You are not the blog owner")
@@ -75,7 +78,7 @@ func (receiver *BlogService) Del(uid int64, id int64) (bool, error) {
 
 func (receiver *BlogService) Update(uid int64, blogModel *blog.Blog) (bool, error) {
 	old := &blog.Blog{}
-	err := receiver.blogDao.GetByID(blogModel.Id, old)
+	_, err := receiver.blogDao.GetByID(blogModel.Id, old)
 	if err != nil {
 		return false, err
 	}

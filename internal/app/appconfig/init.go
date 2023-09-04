@@ -5,25 +5,43 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/mitchellh/mapstructure"
 	"github.com/spf13/viper"
 )
 
 var Conf *appConfig
 
 func init() {
+	viperConfig := viper.New()
+	loadBase(viperConfig)
+	mergeConfig(viperConfig)
+	c := Config{}
+	err := viperConfig.Unmarshal(&c, func(decoderConfig *mapstructure.DecoderConfig) {
+		decoderConfig.TagName = "yaml"
+	})
+	if err != nil {
+		panic(err)
+	}
+	Conf = &appConfig{
+		Viper:  viperConfig,
+		Config: c,
+	}
+}
+
+func loadBase(viperConfig *viper.Viper) {
 	basePath, err := os.Getwd()
 	if err != nil {
 		log.Fatal(err)
 	}
 	baseConfig := filepath.Join(basePath, "configs/app.yaml")
-
-	config := viper.New()
-	config.SetConfigFile(baseConfig)
-	err = config.ReadInConfig()
+	viperConfig.SetConfigFile(baseConfig)
+	err = viperConfig.ReadInConfig()
 	if err != nil {
 		panic(err)
 	}
+}
 
+func mergeConfig(viperConfig *viper.Viper) {
 	var configFile string
 	envConfigPath := os.Getenv("APP_CONFIG_PATH")
 	if envConfigPath != "" {
@@ -32,19 +50,9 @@ func init() {
 	if configFile == "" && len(os.Args) > 1 {
 		configFile = os.Args[1]
 	}
-	config.SetConfigFile(configFile)
-	err = config.MergeInConfig()
+	viperConfig.SetConfigFile(configFile)
+	err := viperConfig.MergeInConfig()
 	if err != nil {
 		panic(err)
-	}
-
-	c := Config{}
-	err = config.Unmarshal(&c)
-	if err != nil {
-		panic(err)
-	}
-	Conf = &appConfig{
-		Viper:  config,
-		Config: c,
 	}
 }

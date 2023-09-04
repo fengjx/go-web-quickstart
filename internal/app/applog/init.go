@@ -17,7 +17,11 @@ func Init() {
 	if logConfig.Appender == "console" {
 		Log = logger.NewConsole()
 	} else {
-		Log = logger.New(logConfig.Level, logConfig.Path, logConfig.MaxSize, logConfig.MaxDays)
+		if logConfig.OpenTrace {
+			Log = logger.New(logConfig.Level, logConfig.Path, logConfig.MaxSize, logConfig.MaxDays, logger.WithTrace())
+		} else {
+			Log = logger.New(logConfig.Level, logConfig.Path, logConfig.MaxSize, logConfig.MaxDays)
+		}
 	}
 	Log.Infof("app log init")
 	hook.AddStopHook(Flush, math.MaxInt)

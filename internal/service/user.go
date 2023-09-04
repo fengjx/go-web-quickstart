@@ -52,7 +52,7 @@ func (receiver *UserService) Register(username string, pwd string) (bool, error)
 	}
 	_, err = user.GetDao().Save(u, "ctime", "utime")
 	if err != nil {
-		applog.Log.With(nil).Errorf("register user err: %s", err.Error())
+		applog.Log.Errorf("register user err: %s", err.Error())
 		return false, err
 	}
 	return true, nil
@@ -76,11 +76,11 @@ func (receiver *UserService) Login(username string, pwd string) (*user.User, err
 
 func (receiver *UserService) Profile(uid int64) (*dto.UserDTO, error) {
 	u := &user.User{}
-	err := user.GetDao().GetByID(uid, u)
+	exist, err := user.GetDao().GetByID(uid, u)
 	if err != nil {
 		return nil, err
 	}
-	if u.Id == 0 {
+	if !exist {
 		return nil, nil
 	}
 	userDTO := &dto.UserDTO{}

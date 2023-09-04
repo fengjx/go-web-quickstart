@@ -42,9 +42,12 @@ func GetDao() *Dao {
 // @param username 用户名
 func (receiver *Dao) GetByUsername(username string) (*User, error) {
 	user := &User{}
-	err := receiver.GetByColumn(daox.OfKv("username", username), user)
+	exist, err := receiver.GetByColumn(daox.OfKv("username", username), user)
 	if err != nil {
 		return nil, err
+	}
+	if !exist {
+		return nil, nil
 	}
 	return user, nil
 }

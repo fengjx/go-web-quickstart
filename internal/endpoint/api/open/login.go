@@ -30,7 +30,7 @@ func (api *LoginApi) register(c *gin.Context) {
 	}
 	ok, err := service.GetUserSvc().Register(req.Username, req.Pwd)
 	if err != nil {
-		applog.Log.With(c.Copy(), "param.username", req.Username).Info("user register err")
+		applog.Log.Info("user register err - ", err)
 		c.JSON(httpcode.Http500, common.Error(err))
 		return
 	}
