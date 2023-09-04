@@ -3,8 +3,8 @@ module github.com/fengjx/go-web-quickstart
 go 1.20
 
 require (
-	github.com/fengjx/daox v0.0.0-20230629014231-1aaf066670ae
-	github.com/fengjx/go-halo v0.0.0-20230816140352-fdea8646728f
+	github.com/fengjx/daox v0.0.0-20230822161110-c9b2a97a7a1a
+	github.com/fengjx/go-halo v0.0.0-20230903150850-e89246e5c389
 	github.com/gin-contrib/gzip v0.0.6
 	github.com/gin-contrib/pprof v1.4.0
 	github.com/gin-gonic/gin v1.9.1
@@ -14,6 +14,7 @@ require (
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/pkg/errors v0.9.1
 	github.com/redis/go-redis/v9 v9.0.4
+	github.com/samber/lo v1.38.1
 	github.com/spf13/viper v1.16.0
 )
 
@@ -41,7 +42,6 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.8 // indirect
 	github.com/petermattis/goid v0.0.0-20230808133559-b036b712a89b // indirect
-	github.com/samber/lo v1.38.1 // indirect
 	github.com/spf13/afero v1.9.5 // indirect
 	github.com/spf13/cast v1.5.1 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect

@@ -1,12 +1,14 @@
 package blog
 
 import (
-	"github.com/fengjx/daox"
-	"github.com/fengjx/daox/sqlbuilder"
-	"github.com/fengjx/go-web-quickstart/internal/app/db"
-	"github.com/fengjx/go-web-quickstart/internal/app/redis"
 	"reflect"
 	"sync"
+
+	"github.com/fengjx/daox"
+	"github.com/fengjx/daox/sqlbuilder"
+
+	"github.com/fengjx/go-web-quickstart/internal/app/db"
+	"github.com/fengjx/go-web-quickstart/internal/app/redis"
 )
 
 type Dao struct {
@@ -15,6 +17,10 @@ type Dao struct {
 
 var once sync.Once
 var dao *Dao
+
+func Init() {
+	_ = GetDao()
+}
 
 func GetDao() *Dao {
 	once.Do(func() {

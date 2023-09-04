@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 
+	"github.com/fengjx/go-web-quickstart/internal/app/applog"
 	"github.com/fengjx/go-web-quickstart/internal/app/http/header"
 )
 
@@ -16,6 +17,9 @@ var Trace = func() gin.HandlerFunc {
 			c.Header(header.RequestID, reqID)
 			c.Writer.Header().Set(header.RequestID, reqID)
 		}
-		c.Set(logger.TraceID, reqID)
+		c.Set(logger.TraceIDKey, reqID)
+		applog.Log.SetLocalTraceID(reqID)
+		c.Next()
+		applog.Log.RemoveLocalContext()
 	}
 }

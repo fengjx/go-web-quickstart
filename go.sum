@@ -71,10 +71,10 @@ github.com/envoyproxy/go-control-plane v0.9.4/go.mod h1:6rpuAdCZL397s3pYoYcLgu1m
 github.com/envoyproxy/go-control-plane v0.9.7/go.mod h1:cwu0lG7PUMfa9snN8LXBig5ynNVH9qI8YYLbd1fK2po=
 github.com/envoyproxy/go-control-plane v0.9.9-0.20201210154907-fd9021fe5dad/go.mod h1:cXg6YxExXjJnVBQHBLXeUAgxn2UodCpnH306RInaBQk=
 github.com/envoyproxy/protoc-gen-validate v0.1.0/go.mod h1:iSmxcyjqTsJpI2R4NaDN7+kN2VEUnK/pcBlmesArF7c=
-github.com/fengjx/daox v0.0.0-20230629014231-1aaf066670ae h1:dOH08YmUqiYkaKZJOoZKI+lrC0ocQQ499dWtJcrs27c=
-github.com/fengjx/daox v0.0.0-20230629014231-1aaf066670ae/go.mod h1:oVCQi/fFSqTYNb0QTMrQc33YRofXDmIo4clyjf0mqeA=
-github.com/fengjx/go-halo v0.0.0-20230816140352-fdea8646728f h1:uDs1k/oGIZgJDY24BObQ2z4tFtNcor6moQymxp3JSzo=
-github.com/fengjx/go-halo v0.0.0-20230816140352-fdea8646728f/go.mod h1:iaTBTE1bj1rySSU/aOI8tDa67npSqHR649CQFzBSxb8=
+github.com/fengjx/daox v0.0.0-20230822161110-c9b2a97a7a1a h1:eWDe36+0pIqby6HN0DIXcEwwLQq7+VKN4FkG8CcM4FM=
+github.com/fengjx/daox v0.0.0-20230822161110-c9b2a97a7a1a/go.mod h1:Obf8kIhYUt4Ore7NrW7PPFX6J4/4RnYfKelmssO0xeA=
+github.com/fengjx/go-halo v0.0.0-20230903150850-e89246e5c389 h1:QbSGKoWtC7I9r0ajIK+NpKPzOwanI5yYFePCZcDwwec=
+github.com/fengjx/go-halo v0.0.0-20230903150850-e89246e5c389/go.mod h1:iaTBTE1bj1rySSU/aOI8tDa67npSqHR649CQFzBSxb8=
 github.com/frankban/quicktest v1.14.4 h1:g2rn0vABPOOXmZUj+vbmUp0lPoXEMuhTpIluN0XL9UY=
 github.com/fsnotify/fsnotify v1.6.0 h1:n+5WquG0fcWoWp6xPWfHdbskMCQaFnG6PfBrh1Ky4HY=
 github.com/fsnotify/fsnotify v1.6.0/go.mod h1:sl3t1tCWJFWoRz9R8WJCbQihKKwmorjAbSClcnxKAGw=

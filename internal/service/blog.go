@@ -16,6 +16,10 @@ type BlogService struct {
 var blogSvc *BlogService
 var blogSvcInitOnce = sync.Once{}
 
+func initBlogSvc() {
+	_ = GetBlogSvc()
+}
+
 func GetBlogSvc() *BlogService {
 	blogSvcInitOnce.Do(func() {
 		blogSvc = &BlogService{

@@ -1,12 +1,16 @@
 package redis
 
 import (
-	"github.com/fengjx/go-halo/json"
 	"time"
+
+	"github.com/fengjx/go-halo/json"
 )
 
 func SetObj(key string, obj interface{}, expiration time.Duration) error {
-	jsonStr := json.ToJson(obj)
+	jsonStr, err := json.ToJson(obj)
+	if err != nil {
+		return err
+	}
 	return GetDefaultClient().Set(Ctx, key, jsonStr, expiration).Err()
 }
 

@@ -10,11 +10,15 @@ import (
 	"github.com/fengjx/go-web-quickstart/internal/app/redis"
 )
 
+type Dao struct {
+	*daox.Dao
+}
+
 var once sync.Once
 var dao *Dao
 
-type Dao struct {
-	*daox.Dao
+func Init() {
+	_ = GetDao()
 }
 
 func GetDao() *Dao {

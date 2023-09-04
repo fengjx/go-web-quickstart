@@ -19,6 +19,10 @@ type UserService struct {
 var userSvc = new(UserService)
 var userSvcInitOnce = sync.Once{}
 
+func initUserSvc() {
+	_ = GetUserSvc()
+}
+
 func GetUserSvc() *UserService {
 	userSvcInitOnce.Do(func() {
 		userSvc = &UserService{
