@@ -15,7 +15,7 @@ build: build-go clean
 build-go:
 	mkdir -p ${BUILD_PATH}
 	rm -rf ${DIST_PATH}
-	cp -r Makefile build/*.sh cmd pkg internal configs ${BUILD_PATH}
+	cp -r Makefile build/*.sh cmd internal configs ${BUILD_PATH}
 	CGO_ENABLED=0 go build -tags=jsoniter -mod=readonly -v -o $(DIST_PATH)/${BINARY_NAME} $(BUILD_PATH)/cmd/main.go
 	cp -rf ${BUILD_PATH}/configs $(DIST_PATH)
 	rm -rf ${BUILD_PATH}
