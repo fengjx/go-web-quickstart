@@ -3,13 +3,14 @@ package middleware
 import (
 	"bytes"
 	"fmt"
-	"github.com/fengjx/go-web-quickstart/internal/app/applog"
 	"net/http"
 	"net/http/httputil"
 	"os"
 	"runtime"
 
 	"github.com/gin-gonic/gin"
+
+	"github.com/fengjx/go-web-quickstart/internal/common/applog"
 )
 
 var (

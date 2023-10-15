@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="quickstart" type="GoApplicationRunConfiguration" factoryName="Go Application">
+    <module name="go-web-quickstart" />
+    <working_directory value="$PROJECT_DIR$" />
+    <parameters value="configs/app-dev.yaml" />
+    <kind value="PACKAGE" />
+    <package value="github.com/fengjx/go-web-quickstart/cmd" />
+    <directory value="$PROJECT_DIR$" />
+    <filePath value="$PROJECT_DIR$/cmd/main.go" />
+    <method v="2" />
+  </configuration>
+</component>

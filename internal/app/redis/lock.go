@@ -1,10 +1,12 @@
 package redis
 
 import (
-	"github.com/fengjx/go-halo/utils"
-	"github.com/fengjx/go-web-quickstart/internal/app/applog"
-	"github.com/google/uuid"
 	"time"
+
+	"github.com/fengjx/go-halo/utils"
+	"github.com/google/uuid"
+
+	"github.com/fengjx/go-web-quickstart/internal/common/applog"
 )
 
 func TryLock(key string, timeout time.Duration) string {

@@ -1,13 +1,3 @@
-env: test
-server:
-  access: "/var/log/web/access.log"
-log:
-  appender: file
-  level: debug
-  path: ./logs/app.log
-  max-size: 1024
-  max-days: 7
-  open-trace: true
 db:
   default:
     type: mysql
@@ -18,6 +8,3 @@ db:
 redis:
   default:
     addr: 192.168.1.200:6379
-
-prop:
-  k1: "value"

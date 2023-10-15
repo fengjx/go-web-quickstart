@@ -1,12 +1,14 @@
 package db
 
 import (
-	"github.com/fengjx/go-web-quickstart/internal/app/appconfig"
+	"log"
+	"strings"
+
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	"github.com/jmoiron/sqlx/reflectx"
-	"log"
-	"strings"
+
+	"github.com/fengjx/go-web-quickstart/internal/app/appconfig"
 )
 
 var dbMap = make(map[string]*sqlx.DB)
@@ -16,11 +18,8 @@ var toLowerMapper = reflectx.NewMapperFunc("json", strings.ToLower)
 
 func Init() {
 	for k, c := range appconfig.Conf.DB {
-		db, err := sqlx.Open(c.Type, c.Dsn)
-		if err != nil {
-			log.Panicf("create db connection err - %s, %s, %s", c.Type, c.Dsn, err.Error())
-		}
-		err = db.Ping()
+		db := sqlx.MustOpen(c.Type, c.Dsn)
+		err := db.Ping()
 		if err != nil {
 			log.Panicf("db ping err - %s, %s, %s", c.Type, c.Dsn, err.Error())
 		}

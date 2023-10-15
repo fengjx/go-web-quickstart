@@ -1,11 +1,7 @@
-server:
-  access: "./logs/access.log"
-log:
-  appender: console
 db:
   default:
     type: mysql
-    dsn: root:1234@tcp(localhost:3306)/fjx?charset=utf8mb4,utf8&tls=false&timeout=10s&parseTime=true
+    dsn: root:1234@tcp(localhost:3306)/fjx?charset=utf8mb4,utf8&tls=false&timeout=3s&parseTime=true
     show-sql: true
     max-idle: 5
     max-conn: 10
@@ -13,6 +9,3 @@ db:
 redis:
   default:
     addr: localhost:6379
-
-prop:
-  k1: "value"

@@ -2,10 +2,12 @@ package middleware
 
 import (
 	"github.com/fengjx/go-halo/utils"
+
 	"github.com/fengjx/go-web-quickstart/internal/app/http/auth"
 	"github.com/fengjx/go-web-quickstart/internal/app/http/httpcode"
-	"github.com/fengjx/go-web-quickstart/internal/common"
 	"github.com/fengjx/go-web-quickstart/internal/common/env"
+	"github.com/fengjx/go-web-quickstart/internal/common/response"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -22,12 +24,12 @@ func Auth() gin.HandlerFunc {
 		}
 		token := ctx.GetHeader("X-Token")
 		if token == "" {
-			ctx.AbortWithStatusJSON(httpcode.Http401, common.ErrorUnauthorized())
+			ctx.AbortWithStatusJSON(httpcode.Http401, response.ErrorUnauthorized())
 			return
 		}
 		uid, err := auth.Parse(token)
 		if uid == 0 || err != nil {
-			ctx.AbortWithStatusJSON(httpcode.Http401, common.ErrorUnauthorized())
+			ctx.AbortWithStatusJSON(httpcode.Http401, response.ErrorUnauthorized())
 			return
 		}
 		ctx.Set("uid", uid)

@@ -9,26 +9,26 @@ Content-Type: application/json
 X-Uid: 1000
 
 {
-  "title": "title3",
-  "content": "content3"
+  "title": "title11",
+  "content": "content11"
 }
 
 ### get blog
-GET http://{{host}}/openapi/blog/3
+GET http://{{host}}/openapi/blog/11
 Content-Type: application/json
 X-Uid: 1000
 
 
 ### update blog
-PUT http://{{host}}/openapi/blog/3
+PUT http://{{host}}/openapi/blog/11
 Content-Type: application/json
 X-Uid: 1000
 
 {
-  "title": "title3-1",
-  "content": "content3-1"
+  "title": "title11-1",
+  "content": "content11-1"
 }
 
 ### delete blog
-DELETE http://{{host}}/openapi/blog/1
+DELETE http://{{host}}/openapi/blog/11
 X-Uid: 1000

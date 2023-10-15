@@ -5,8 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 
-	"github.com/fengjx/go-web-quickstart/internal/app/applog"
 	"github.com/fengjx/go-web-quickstart/internal/app/http/header"
+	"github.com/fengjx/go-web-quickstart/internal/common/applog"
 )
 
 var Trace = func() gin.HandlerFunc {

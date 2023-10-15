@@ -7,7 +7,7 @@ POST http://{{host}}/openapi/register
 Content-Type: application/json
 
 {
-  "username": "fjx1",
+  "username": "fjx8",
   "pwd": "123456"
 }
 
@@ -16,7 +16,7 @@ POST http://{{host}}/openapi/login
 Content-Type: application/json
 
 {
-  "username": "fjx1",
+  "username": "fjx8",
   "pwd": "123456"
 }
 
