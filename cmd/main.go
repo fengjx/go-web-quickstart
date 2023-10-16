@@ -10,13 +10,13 @@ import (
 )
 
 func main() {
-	ctx := context.Background()
+	ctx, cancel := context.WithCancel(context.Background())
 	app.Start(ctx)
 	// Wait for signal to initiate server shutdown.
 	quit := make(chan os.Signal)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 
 	<-quit
-	ctx.Done()
+	cancel()
 	app.Stop(ctx)
 }
