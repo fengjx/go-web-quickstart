@@ -1,17 +1,20 @@
 package appconfig
 
 import (
-	"log"
+	"fmt"
 	"os"
-	"path/filepath"
+	"path"
 
 	"github.com/mitchellh/mapstructure"
 	"github.com/spf13/viper"
+
+	"github.com/fengjx/go-web-quickstart/internal/common/applog"
+	"github.com/fengjx/go-web-quickstart/internal/common/env"
 )
 
-var Conf *appConfig
+var conf *AppConfig
 
-func init() {
+func Init() {
 	viperConfig := viper.New()
 	loadBase(viperConfig)
 	mergeConfig(viperConfig)
@@ -22,20 +25,17 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-	Conf = &appConfig{
+	conf = &AppConfig{
 		Viper:  viperConfig,
 		Config: c,
 	}
 }
 
 func loadBase(viperConfig *viper.Viper) {
-	basePath, err := os.Getwd()
-	if err != nil {
-		log.Fatal(err)
-	}
-	baseConfig := filepath.Join(basePath, "configs/app.yaml")
-	viperConfig.SetConfigFile(baseConfig)
-	err = viperConfig.ReadInConfig()
+	configName := "configs/app.yaml"
+	applog.Log.Infof("load config: %s", configName)
+	viperConfig.SetConfigFile(configName)
+	err := viperConfig.ReadInConfig()
 	if err != nil {
 		panic(err)
 	}
@@ -43,16 +43,25 @@ func loadBase(viperConfig *viper.Viper) {
 
 func mergeConfig(viperConfig *viper.Viper) {
 	var configFile string
-	envConfigPath := os.Getenv("APP_CONFIG_PATH")
+	envConfigPath := os.Getenv("APP_CONFIG")
 	if envConfigPath != "" {
 		configFile = envConfigPath
 	}
 	if configFile == "" && len(os.Args) > 1 {
 		configFile = os.Args[1]
 	}
+	if configFile == "" {
+		appEnv := env.GetEnv()
+		configFile = path.Join("configs", fmt.Sprintf("app-%s.yaml", appEnv))
+	}
+	applog.Log.Infof("merge config: %s", configFile)
 	viperConfig.SetConfigFile(configFile)
 	err := viperConfig.MergeInConfig()
 	if err != nil {
 		panic(err)
 	}
+}
+
+func GetConfig() *AppConfig {
+	return conf
 }

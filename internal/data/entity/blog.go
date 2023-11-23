@@ -1,17 +1,21 @@
 package entity
 
-import "time"
+import (
+	"time"
+)
 
+// Blog 博客表
+// auto generate by gen cmd tool
 type Blog struct {
-	Id         int64      `json:"id,string"`
-	Uid        int64      `json:"uid,string"`
-	Title      string     `json:"title"`
-	Content    string     `json:"content"`
-	CreateTime int64      `json:"create_time"`
-	Ctime      *time.Time `json:"-"`
-	Utime      *time.Time `json:"-"`
+	ID         int64     `json:"id"`          // -
+	UID        int64     `json:"uid"`         // 用户ID
+	Title      string    `json:"title"`       // 标题
+	Content    string    `json:"content"`     // 内容
+	CreateTime int64     `json:"create_time"` // 创建时间
+	Utime      time.Time `json:"utime"`       // 更新时间
+	Ctime      time.Time `json:"ctime"`       // 创建时间
 }
 
 func (m *Blog) GetID() interface{} {
-	return m.Id
+	return m.ID
 }

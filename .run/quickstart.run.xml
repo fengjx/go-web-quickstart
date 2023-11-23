@@ -2,7 +2,9 @@
   <configuration default="false" name="quickstart" type="GoApplicationRunConfiguration" factoryName="Go Application">
     <module name="go-web-quickstart" />
     <working_directory value="$PROJECT_DIR$" />
-    <parameters value="configs/app-dev.yaml" />
+    <envs>
+      <env name="APP_ENV" value="dev" />
+    </envs>
     <kind value="PACKAGE" />
     <package value="github.com/fengjx/go-web-quickstart/cmd" />
     <directory value="$PROJECT_DIR$" />

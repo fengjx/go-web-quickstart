@@ -25,8 +25,8 @@ Makefile cmd:
     fmt-go:                             格式化 golang 代码
     tidy:                               去掉未使用的项目依赖
     clean:                              清理临时文件
+    gen:                                代码生成，具体查看 gen.yml 配置
     help:                               Makefile 帮助
-
 ```
 
 ## 启动项目
@@ -73,6 +73,7 @@ docker run  -p 8080:8080 -e APP_ENV=test --name webapp web-app:1.0.0
 - deployments: 应用依赖
 - init: 应用启动配置
 - internal: 应用业务逻辑代码
+  - endpoint：功能分包，每个功能点放一个目录，包括 dao、service、controller 等，其他功能有依赖则暴露相关api
 - pkg: 放到应用外部依然能使用的代码库、工具类
 - test: 测试相关
 - tools: 项目工具，如代码生成脚本

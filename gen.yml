@@ -1,0 +1,10 @@
+ds:
+  type: mysql
+  dsn: root:1234@tcp(192.168.1.200:3306)/gogo?charset=utf8mb4
+target:
+  custom:
+    tag-name: json
+    out-dir: ./internal/data
+  tables:
+    - blog
+    - user

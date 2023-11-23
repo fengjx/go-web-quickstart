@@ -1,0 +1,17 @@
+package entity
+{{$ilen := len .Table.GoImports}}
+{{if gt $ilen 0}}
+import (
+	{{range .Table.GoImports}}"{{.}}"{{end}}
+)
+{{end}}
+{{$TagName := .TagName}}
+// {{GonicCase .Table.Name}} {{.Table.Comment}}
+// auto generate by gen cmd tool
+type {{GonicCase .Table.Name}} struct {
+{{range .Table.Columns}}    {{GonicCase .Name}} {{SQLType2GoTypeString .SQLType}} `{{$TagName}}:"{{.Name}}"` // {{LineString .Comment}}
+{{end}}}
+
+func (m *{{GonicCase .Table.Name}}) GetID() interface{} {
+	return m.{{GonicCase .Table.PrimaryKey.Name}}
+}

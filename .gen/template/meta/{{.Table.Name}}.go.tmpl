@@ -1,0 +1,81 @@
+package meta
+
+import (
+    "github.com/fengjx/daox/sqlbuilder"
+    "github.com/fengjx/daox/sqlbuilder/ql"
+{{$ilen := len .Table.GoImports}}
+{{if gt $ilen 0}}
+    {{range .Table.GoImports}}"{{.}}"{{end}}
+{{end}}
+)
+{{$TagName := .TagName}}
+{{$ObjName := GonicCase .Table.Name}}
+// {{$ObjName}}M {{.Table.Comment}}
+// auto generate by gen cmd tool
+type {{GonicCase .Table.Name}}M struct {
+{{range .Table.Columns}}    {{GonicCase .Name}} string
+{{end}}}
+
+var {{GonicCase .Table.Name}}Meta = {{GonicCase .Table.Name}}M{
+{{range .Table.Columns}}    {{GonicCase .Name}}: "{{.Name}}",
+{{end}}}
+
+{{range .Table.Columns}}
+{{$ColName := GonicCase .Name}}
+{{$TColName := TitleCase .Name}}
+func (m {{$ObjName}}M) {{$TColName}}In(vals ...{{SQLType2GoTypeString .SQLType}}) sqlbuilder.Column {
+	var args []any
+    for _, val := range vals {
+        args = append(args, val)
+    }
+    return ql.Col(m.{{$ColName}}).In(args...)
+}
+
+func (m {{$ObjName}}M) {{$TColName}}NotIn(vals ...{{SQLType2GoTypeString .SQLType}}) sqlbuilder.Column {
+	var args []any
+    for _, val := range vals {
+        args = append(args, val)
+    }
+    return ql.Col(m.{{$ColName}}).NotIn(args...)
+}
+
+func (m {{$ObjName}}M) {{$TColName}}EQ(val {{SQLType2GoTypeString .SQLType}}) sqlbuilder.Column {
+	return ql.Col(m.{{$ColName}}).EQ(val)
+}
+
+func (m {{$ObjName}}M) {{$TColName}}NotEQ(val {{SQLType2GoTypeString .SQLType}}) sqlbuilder.Column {
+	return ql.Col(m.{{$ColName}}).NotEQ(val)
+}
+
+func (m {{$ObjName}}M) {{$TColName}}LT(val {{SQLType2GoTypeString .SQLType}}) sqlbuilder.Column {
+	return ql.Col(m.{{$ColName}}).LT(val)
+}
+
+func (m {{$ObjName}}M) {{$TColName}}LTEQ(val {{SQLType2GoTypeString .SQLType}}) sqlbuilder.Column {
+	return ql.Col(m.{{$ColName}}).LTEQ(val)
+}
+
+func (m {{$ObjName}}M) {{$TColName}}GT(val {{SQLType2GoTypeString .SQLType}}) sqlbuilder.Column {
+	return ql.Col(m.{{$ColName}}).GT(val)
+}
+
+func (m {{$ObjName}}M) {{$TColName}}GTEQ(val {{SQLType2GoTypeString .SQLType}}) sqlbuilder.Column {
+	return ql.Col(m.{{$ColName}}).GTEQ(val)
+}
+
+func (m {{$ObjName}}M) {{$TColName}}Like(val {{SQLType2GoTypeString .SQLType}}) sqlbuilder.Column {
+	return ql.Col(m.{{$ColName}}).Like(val)
+}
+
+func (m {{$ObjName}}M) {{$TColName}}NotLike(val {{SQLType2GoTypeString .SQLType}}) sqlbuilder.Column {
+	return ql.Col(m.{{$ColName}}).NotLike(val)
+}
+
+func (m {{$ObjName}}M) {{$TColName}}Desc() sqlbuilder.OrderBy {
+	return ql.Desc(m.{{$ColName}})
+}
+
+func (m {{$ObjName}}M) {{$TColName}}Asc() sqlbuilder.OrderBy {
+	return ql.Asc(m.{{$ColName}})
+}
+{{end}}

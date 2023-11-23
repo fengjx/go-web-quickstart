@@ -2,7 +2,6 @@ package user
 
 import (
 	"fmt"
-	"sync"
 
 	"github.com/fengjx/go-halo/utils"
 	"go.uber.org/zap"
@@ -14,23 +13,17 @@ import (
 	"github.com/fengjx/go-web-quickstart/internal/data/entity"
 )
 
-type serviceUser struct {
+type _userService struct {
 }
 
-var userSvc *serviceUser
-var userSvcOnce = sync.Once{}
-
-func getUserSvc() *serviceUser {
-	userSvcOnce.Do(func() {
-		userSvc = &serviceUser{}
-	})
-	return userSvc
+func newUserSvc() *_userService {
+	return &_userService{}
 }
 
 // Register
 // 用户注册
-func (svc *serviceUser) register(username string, pwd string) (bool, error) {
-	old, err := getUserDao().getByUsername(username)
+func (svc *_userService) register(username string, pwd string) (bool, error) {
+	old, err := getInst().userDao.getByUsername(username)
 	if err != nil {
 		return false, err
 	}
@@ -45,7 +38,7 @@ func (svc *serviceUser) register(username string, pwd string) (bool, error) {
 		Pwd:      cryptoPwd,
 		Salt:     salt,
 	}
-	_, err = getUserDao().Save(u, "ctime", "utime")
+	_, err = getInst().userDao.Save(u, "ctime", "utime")
 	if err != nil {
 		applog.Log.Errorf("register user err: %s", err.Error())
 		return false, err
@@ -53,13 +46,13 @@ func (svc *serviceUser) register(username string, pwd string) (bool, error) {
 	return true, nil
 }
 
-func (svc *serviceUser) login(username string, pwd string) (*entity.User, error) {
-	u, err := getUserDao().getByUsername(username)
+func (svc *_userService) login(username string, pwd string) (*entity.User, error) {
+	u, err := getInst().userDao.getByUsername(username)
 	if err != nil {
 		applog.Log.Error("user login err", zap.Error(err))
 		return nil, err
 	}
-	if u.Id == 0 {
+	if u.ID == 0 {
 		return nil, errno.NewErr(response.CodeUserErr, "username not exists")
 	}
 	cryptoPwd := utils.Md5SumString(fmt.Sprintf("%s%s", pwd, u.Salt))
@@ -69,9 +62,9 @@ func (svc *serviceUser) login(username string, pwd string) (*entity.User, error)
 	return u, nil
 }
 
-func (svc *serviceUser) profile(uid int64) (*dto.UserDTO, error) {
+func (svc *_userService) profile(uid int64) (*dto.UserDTO, error) {
 	u := &entity.User{}
-	exist, err := getUserDao().GetByID(uid, u)
+	exist, err := getInst().userDao.GetByID(uid, u)
 	if err != nil {
 		return nil, err
 	}

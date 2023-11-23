@@ -36,6 +36,10 @@ clean:
 	@echo 'clean'
 	@rm -rf $(BUILD_PATH)
 
+.PHONY: gen
+### gen:				代码生成，具体查看 gen.yml 配置
+gen:
+	@gen -f gen.yml
 
 ### help:				Makefile 帮助
 .PHONY: help

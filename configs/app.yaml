@@ -1,12 +1,8 @@
-name: go-web-app
 env: local
 server:
-  host: "0.0.0.0"
-  port: 8080
+  listen: ":8080"
   template:
     - "template"
-    - "html"
-  access: "./logs/access.log"
 log:
   level: debug
   appender: console

@@ -9,7 +9,7 @@ import (
 
 func (api *route) profile(c *gin.Context) {
 	uid := c.GetInt64("uid")
-	profile, err := getUserSvc().profile(uid)
+	profile, err := getInst().userSvc.profile(uid)
 	if err != nil {
 		c.JSON(httpcode.Http404, response.Error(err))
 		return

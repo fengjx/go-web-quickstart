@@ -17,7 +17,7 @@ var defaultDB *sqlx.DB
 var toLowerMapper = reflectx.NewMapperFunc("json", strings.ToLower)
 
 func Init() {
-	for k, c := range appconfig.Conf.DB {
+	for k, c := range appconfig.GetConfig().DB {
 		db := sqlx.MustOpen(c.Type, c.Dsn)
 		err := db.Ping()
 		if err != nil {

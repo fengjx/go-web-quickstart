@@ -2,22 +2,24 @@ package appconfig
 
 import "github.com/spf13/viper"
 
-type appConfig struct {
+type AppConfig struct {
 	*viper.Viper
 	Config
 }
 
 type Config struct {
+	Env    string                  `yaml:"envh"`
 	Server ServerConfig            `yaml:"server"`
 	DB     map[string]*DbConfig    `yaml:"db"`
 	Redis  map[string]*RedisConfig `yaml:"redis"`
 }
 
 type ServerConfig struct {
-	Host       string   `yaml:"host"`
-	Port       int      `yaml:"port"`
+	Listen     string   `yaml:"listen"`
 	Template   []string `yaml:"template"`
+	Static     string   `yaml:"static"`
 	AuthSecret string   `yaml:"auth-secret"`
+	Accesslog  string   `yaml:"accesslog"`
 }
 
 type DbConfig struct {

@@ -1,9 +1,9 @@
 
 ### ping
-GET http://{{host}}/health/ping
+GET {{host}}/health/ping
 
 ### register
-POST http://{{host}}/openapi/register
+POST {{host}}/openapi/register
 Content-Type: application/json
 
 {
@@ -12,7 +12,7 @@ Content-Type: application/json
 }
 
 ### login
-POST http://{{host}}/openapi/login
+POST {{host}}/openapi/login
 Content-Type: application/json
 
 {
@@ -23,6 +23,6 @@ Content-Type: application/json
 > {% client.global.set("auth_token", response.body.data.token); %}
 
 ### user profile
-GET http://{{host}}/openapi/user/profile
+GET {{host}}/openapi/user/profile
 X-Token: {{auth_token}}
 

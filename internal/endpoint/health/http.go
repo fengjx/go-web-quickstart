@@ -4,9 +4,9 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/fengjx/go-web-quickstart/internal/app/http/httpcode"
-	"github.com/fengjx/go-web-quickstart/internal/app/http/router"
 	"github.com/fengjx/go-web-quickstart/internal/common/applog"
 	"github.com/fengjx/go-web-quickstart/internal/common/response"
+	"github.com/fengjx/go-web-quickstart/internal/endpoint/router"
 )
 
 func initRouter() {

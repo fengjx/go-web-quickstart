@@ -19,7 +19,7 @@ func (api *route) register(c *gin.Context) {
 		c.JSON(httpcode.Http400, response.ErrorUnauthorized())
 		return
 	}
-	ok, err := getUserSvc().register(req.Username, req.Pwd)
+	ok, err := getInst().userSvc.register(req.Username, req.Pwd)
 	if err != nil {
 		applog.Log.Info("user register err", zap.Error(err))
 		c.JSON(httpcode.Http500, response.Error(err))
@@ -37,17 +37,17 @@ func (api *route) login(c *gin.Context) {
 		c.JSON(httpcode.Http400, response.ErrorBadRequest())
 		return
 	}
-	u, err := getUserSvc().login(req.Username, req.Pwd)
+	u, err := getInst().userSvc.login(req.Username, req.Pwd)
 	if err != nil {
 		c.JSON(httpcode.Http500, response.Error(err))
 		return
 	}
-	tokenString, err := auth.Signed(u.Id)
+	tokenString, err := auth.Signed(u.ID)
 	if err != nil {
 		c.JSON(httpcode.Http500, response.UserError("login fail"))
 		return
 	}
-	applog.Log.Info("user login success ", zap.Int64("userID", u.Id))
+	applog.Log.Info("user login success ", zap.Int64("userID", u.ID))
 	c.JSON(httpcode.Http200, response.Data(map[string]interface{}{
 		"token": tokenString,
 	}))

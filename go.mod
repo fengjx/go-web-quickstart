@@ -3,8 +3,8 @@ module github.com/fengjx/go-web-quickstart
 go 1.20
 
 require (
-	github.com/fengjx/daox v1.0.0-rc1
-	github.com/fengjx/go-halo v0.0.0-20231013191159-98de46075efa
+	github.com/fengjx/daox v1.0.0-rc4
+	github.com/fengjx/go-halo v0.0.1-rc4
 	github.com/gin-contrib/gzip v0.0.6
 	github.com/gin-contrib/pprof v1.4.0
 	github.com/gin-gonic/gin v1.9.1

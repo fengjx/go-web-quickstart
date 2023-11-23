@@ -2,8 +2,8 @@ package blog
 
 import (
 	"github.com/fengjx/go-web-quickstart/internal/app/http/middleware"
-	"github.com/fengjx/go-web-quickstart/internal/app/http/router"
 	"github.com/fengjx/go-web-quickstart/internal/common/applog"
+	"github.com/fengjx/go-web-quickstart/internal/endpoint/router"
 )
 
 func initRouter() {

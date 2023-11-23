@@ -1,7 +1,6 @@
 package blog
 
 import (
-	"sync"
 	"time"
 
 	"go.uber.org/zap"
@@ -12,22 +11,16 @@ import (
 	"github.com/fengjx/go-web-quickstart/internal/data/entity"
 )
 
-type serviceBlog struct {
+type _blogService struct {
 }
 
-var blogSvc *serviceBlog
-var blogSvcInitOnce = sync.Once{}
-
-func getBlogSvc() *serviceBlog {
-	blogSvcInitOnce.Do(func() {
-		blogSvc = &serviceBlog{}
-	})
-	return blogSvc
+func newBlogSvc() *_blogService {
+	return &_blogService{}
 }
 
-func (svc *serviceBlog) Add(blogModel *entity.Blog) (bool, error) {
+func (svc *_blogService) add(blogModel *entity.Blog) (bool, error) {
 	blogModel.CreateTime = time.Now().Unix()
-	_, err := getBlogDao().Save(blogModel)
+	_, err := getInst().blogDao.Save(blogModel)
 	if err != nil {
 		applog.Log.Errorf("add blog err - %s", err.Error())
 		return false, err
@@ -35,13 +28,13 @@ func (svc *serviceBlog) Add(blogModel *entity.Blog) (bool, error) {
 	return true, nil
 }
 
-func (svc *serviceBlog) Page(offset int, size int) ([]*entity.Blog, error) {
-	return getBlogDao().Page(offset, size)
+func (svc *_blogService) page(offset int, size int) ([]*entity.Blog, error) {
+	return getInst().blogDao.page(offset, size)
 }
 
-func (svc *serviceBlog) Get(id int64) (*entity.Blog, error) {
+func (svc *_blogService) get(id int64) (*entity.Blog, error) {
 	blogModel := &entity.Blog{}
-	exist, err := getBlogDao().GetByID(id, blogModel)
+	exist, err := getInst().blogDao.GetByID(id, blogModel)
 	if err != nil {
 		applog.Log.Errorf("get blog err - %s", err.Error())
 		return nil, err
@@ -52,19 +45,19 @@ func (svc *serviceBlog) Get(id int64) (*entity.Blog, error) {
 	return blogModel, nil
 }
 
-func (svc *serviceBlog) Del(uid int64, id int64) (bool, error) {
+func (svc *_blogService) del(uid int64, id int64) (bool, error) {
 	blogModel := &entity.Blog{}
-	exist, err := getBlogDao().GetByID(id, blogModel)
+	exist, err := getInst().blogDao.GetByID(id, blogModel)
 	if err != nil {
 		return false, err
 	}
 	if !exist {
 		return false, errno.NewErr(response.CodeSystemErr, "user not found")
 	}
-	if blogModel.Uid != uid {
+	if blogModel.UID != uid {
 		return false, errno.NewErr(response.CodeUserErr, "You are not the blog owner")
 	}
-	ok, err := getBlogDao().DeleteByID(id)
+	ok, err := getInst().blogDao.DeleteByID(id)
 	if err != nil {
 		applog.Log.Errorf("del blog err - %s", err.Error())
 		return false, err
@@ -72,19 +65,19 @@ func (svc *serviceBlog) Del(uid int64, id int64) (bool, error) {
 	return ok, nil
 }
 
-func (svc *serviceBlog) Update(uid int64, blogModel *entity.Blog) (bool, error) {
+func (svc *_blogService) update(uid int64, blogModel *entity.Blog) (bool, error) {
 	old := &entity.Blog{}
-	_, err := getBlogDao().GetByID(blogModel.Id, old)
+	_, err := getInst().blogDao.GetByID(blogModel.ID, old)
 	if err != nil {
 		return false, err
 	}
-	if old == nil || old.Id == 0 {
+	if old == nil || old.ID == 0 {
 		return false, errno.NewErr(response.CodeSystemErr, "blog not exist")
 	}
-	if old.Uid != uid {
+	if old.UID != uid {
 		return false, errno.NewErr(response.CodeUserErr, "You are not the blog owner")
 	}
-	ok, err := getBlogDao().UpdateField(blogModel.Id, map[string]interface{}{
+	ok, err := getInst().blogDao.UpdateField(blogModel.ID, map[string]interface{}{
 		"title":   blogModel.Title,
 		"content": blogModel.Content,
 	})

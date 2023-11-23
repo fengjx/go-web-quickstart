@@ -9,6 +9,9 @@ const (
 )
 
 const (
-	HookEventBeforeStart = "before-start"
-	HookEventShutdown    = "shutdown"
+	HookEventEndpointInitFinish = "endpoint-init-finish"
+	HookEventBeforeStart        = "before-start"
+	HookEventAfterStart         = "after-start"
+	HookEventBeforeShutdown     = "before-shutdown"
+	HookEventAfterShutdown      = "after-shutdown"
 )
